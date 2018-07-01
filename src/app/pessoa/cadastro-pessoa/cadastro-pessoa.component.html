@@ -1,0 +1,203 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Dados pessoais:<small>Visualização</small></h1>
+    
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Formulários</a></li>
+      <li class="active">Elementos gerais</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">			
+    <div class="box box-default">
+            
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="aw-page-header-controls">
+              <a class="btn  btn-default" [routerLink]="['/pessoas']">
+                <i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa pessoas</span>
+              </a>
+            </div>
+          </div>
+        
+        </div>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+
+      <form [formGroup]="formulario" novalidate>				
+        <div class="box-body">
+        
+          <div class="row">              
+            <npj-input-content for="nome" label="Nome" errorMessage="Nome deve ser informado">               
+              <input id="nome" type="text" size="100" maxlength="100" formControlName="nome" autofocus="autofocus"
+                class="form-control" />
+            </npj-input-content>                       
+          </div>
+
+          <div class="row">             
+            <npj-input-content for="pseudonimo" label="Pseudônimo" errorMessage="Pseudônimo deve ser informado"> 
+                <input id="pseudonimo" formControlName="pseudonimo" type="text" size="50" maxlength="50" class="form-control" />
+            </npj-input-content>
+          
+            <div class="form-group  col-sm-2">
+              <label class="control-label">Idoso</label>
+              <div>
+                <input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+                  data-on-text="Sim" data-off-text="Não" formControlName="idoso">
+              </div>
+            </div>
+            <div class="form-group  col-sm-3">
+              <label class="control-label">Portador de Deficiência</label>
+              <div>
+                <input type="checkbox" class="js-checkbox" data-size="small"
+                  data-off-color="danger" data-on-text="Sim" data-off-text="Não" formControlName="portadorDeficiencia">
+              </div>
+            </div>
+            <div class="form-group  col-sm-3">
+              <label class="control-label">Atendimento Preferêncial</label>
+              <div>
+                <input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+                  data-on-text="Sim" data-off-text="Não" formControlName="atendimentoPreferencial">
+              </div>
+            </div>							
+          </div>
+          
+          <div class="row">
+            <npj-input-content for="email" label="Email" errorMessage="Email deve ser informado"> 
+              <input id="email" type="text" formControlName="email" size="100" maxlength="100" class="form-control" />
+            </npj-input-content>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label for="foneResidencial" class="control-label">Fone Residencial</label> 
+              <input id="foneResidencial" size="20" maxlength="20" type="text" class="form-control" formControlName="foneResidencial" />
+            </div>
+          </div>        
+
+          <div class="row">
+            <npj-input-content for="foneCelular" label="Fone celular" errorMessage="Fone Celular deve ser informado"> 
+              <input id="foneCelular" type="text" size="20" formControlName="foneCelular" maxlength="20" class="form-control" />
+            </npj-input-content>
+          </div>  
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label class="control-label" for="rg">RG</label> 
+              <input id="rg" type="text" size="20" maxlength="20" class="form-control" formControlName="rg" />
+            </div>
+          </div>
+
+          <div class="row">
+            <npj-input-content for="cpf" label="CPF" errorMessage="CPF deve ser informado"> 
+              <input id="cpf" type="text" size="20" formControlName="cpf" maxlength="20" class="form-control" />
+            </npj-input-content>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label class="control-label" for="dataNascimento">Data Nascimento</label> 
+              <input id="dataNascimento" type="text" class="form-control" formControlName="dataNascimento" />
+            </div>
+          </div>
+            
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label class="control-label" for="naturalidade">Naturalidade</label> 
+              <input id="naturalidade" type="text" size="100" maxlength="100" class="form-control" formControlName="naturalidade" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label class="control-label" for="nacionalidade">Nacionalidade</label> 
+              <input id="nacionalidade" type="text" size="100" maxlength="100" class="form-control" formControlName="nacionalidade" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label class="control-label" for="profissao">Profissão</label> 
+              <input id="profissao" type="text" size="100" maxlength="100" class="form-control" formControlName="profissao" />
+            </div>
+          </div>
+          
+          <div class="row">
+            <npj-input-content for="estadoCivil" label="Estado civil" errorMessage="Estado civil deve ser informado">      
+              <select id="estadoCivil" class="form-control" formControlName="estadoCivil">         
+                <option *ngFor="let estadoCivil of estadosCivis" [value]="estadoCivil.value">{{estadoCivil.label}}</option>
+              </select>
+            </npj-input-content>
+          </div>
+          
+          <div formGroupName="endereco">
+
+            <div class="row">
+                <npj-input-content for="logradouro" label="Logradouro" errorMessage="Logradouro deve ser informado">
+                  <input id="logradouro" type="text" size="100" maxlength="100" formControlName="logradouro" class="form-control" />
+                </npj-input-content>
+            </div>
+            
+            <div class="row">
+              <div class="form-group  col-sm-12">
+                <label class="control-label" for="bairro">Bairro</label> 
+                <input type="text" class="form-control" size="100" maxlength="100" id="bairro" formControlName="bairro" />
+              </div>
+            </div>
+              
+            <div class="row">
+              <npj-input-content for="cep" label="CEP" errorMessage="CEP deve ser informado"> 
+                <input type="text" class="form-control" id="cep" formControlName="cep" />
+              </npj-input-content>
+            </div>
+            
+            <div class="row">
+              <div class="form-group  col-sm-12"> 
+                <label class="control-label">Estado</label>           
+                <select class="form-control" (change)="buscarCidadesDoEstado($event.target.value)">
+                  <option value="">Selecione um estado</option>
+                  <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.nome}}</option>
+                </select>
+              </div>            
+            </div>
+            
+            <div class="row" formGroupName="cidade">
+              <npj-input-content for="cidade" label="Cidade" errorMessage="Cidade deve ser informado">
+                <npj-select [options]="cidades" formControlName="id"></npj-select>
+              </npj-input-content>
+            </div>
+          
+          </div>
+
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <div class="btn-group">
+            <button [disabled]="formulario.invalid" type="submit" (click)="salvar(formulario.value)" class="btn  btn-primary">Salvar</button>
+            <button [disabled]="formulario.invalid" type="button" class="btn  btn-primary  dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            
+            <ul class="dropdown-menu">
+              <li><a href="#" class="js-submit-btn">Salvar e transformar em assistido</a></li>
+              <li><a href="#" class="js-submit-btn">Salvar e transformar em réu</a></li>
+            </ul>
+          </div>
+          
+          <a [routerLink]="['/pessoas/nova']" class="btn btn-info" role="button">Nova pessoa</a>
+        </div>
+      </form>
+    </div>
+    <!-- /.box -->
+  </section>
+  <!-- /.content -->
+</div>

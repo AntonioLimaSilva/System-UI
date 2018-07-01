@@ -1,0 +1,8 @@
+<div class="col-sm-12  form-group bw-required" [class.has-success]="hasSuccess()" [class.has-error]="hasError()">
+  <label [for]="for" class="control-label">{{label}}</label>
+  
+  <ng-content></ng-content>
+
+  <span class="help-block" *ngIf="hasSuccess()"><i class="fa fa-check"></i> Ok</span>
+  <span class="help-block" *ngIf="hasError()"><i class="fa fa-remove"></i> {{errorMessage}}</span>
+</div>
