@@ -26,12 +26,15 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <form method="GET">
+
+
+            <form #form="ngForm" novalidate>
               <div class="row">
                 <div class="col-sm-6  form-group">
                   <label for="nome" class="control-label">Nome</label> 
                   <input id="nome" type="text" size="100" maxlength="100" autofocus="autofocus" 
-                    class="form-control" placeholder="Pesquisar por nome"/>
+                    class="form-control" name="nome" ngModel [(ngModel)]="filter.nome" required
+                    placeholder="Pesquisar por nome" autocomplete="off" />
                 </div>
 
                 <div class="col-sm-4  form-group">
@@ -49,7 +52,7 @@
               
               <!-- /.box-body -->
               <div class="box-footer">
-                <button class="btn  btn-primary" type="submit">Pesquisar</button>
+                <button class="btn  btn-primary" (click)="filtrar()" [disabled]="form.invalid" type="submit">Pesquisar</button>
               </div>
             </form>
           

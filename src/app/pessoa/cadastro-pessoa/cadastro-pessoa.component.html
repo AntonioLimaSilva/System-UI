@@ -168,15 +168,22 @@
                 </select>
               </div>            
             </div>
-            
+           
             <div class="row" formGroupName="cidade">
               <npj-input-content for="cidade" label="Cidade" errorMessage="Cidade deve ser informado">
                 <npj-select [options]="cidades" formControlName="id"></npj-select>
               </npj-input-content>
-            </div>
-          
+            </div>           
           </div>
 
+          <div class="row">
+            <input type="hidden" />
+            <input type="hidden" />
+            <div class="form-group  col-sm-12">
+              <label class="control-label">Foto</label>
+              <input type="file" (change)="inputFileChange($event)"/>
+            </div>
+          </div>
           <!-- /.row -->
         </div>
         <!-- /.box-body -->

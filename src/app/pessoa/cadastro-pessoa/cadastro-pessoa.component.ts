@@ -20,6 +20,8 @@ export class CadastroPessoaComponent implements OnInit {
 
   estados: Estado[];
   cidades: Cidade[];
+  foto: string;
+  contentType: string;
 
   formulario: FormGroup;
 
@@ -41,6 +43,9 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   salvar(pessoa: Pessoa) {
+    pessoa.foto = this.foto;
+    pessoa.contentType = this.contentType;
+
     this.pessoaService.save(pessoa)
       .subscribe((id) => {
         this.formulario.reset();
@@ -73,6 +78,18 @@ export class CadastroPessoaComponent implements OnInit {
         })
       })    
     });
+  }
+
+  inputFileChange(event) {
+    if(event.target.files && event.target.files[0]) {
+      const files = event.target.files[0];
+
+      this.pessoaService.upload(files).subscribe(
+        arquvio => {
+          this.foto = arquvio.fileName;
+          this.contentType = arquvio.contentType;
+        });
+    }
   }
 
 }

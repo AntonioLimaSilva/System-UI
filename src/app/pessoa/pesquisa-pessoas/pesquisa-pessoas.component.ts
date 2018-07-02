@@ -23,13 +23,17 @@ export class PesquisaPessoasComponent implements OnInit {
     this.pesquisar();
   }
 
+  filtrar() {
+    this.pesquisar();
+  }
+
   setPage(page, event) {
     event.preventDefault();
     this.pesquisar(page);
   }
 
-  pesquisar(pagina = 0) {
-    this.filter.page = pagina;
+  pesquisar(page = 0) {
+    this.filter.page = page;
 
     this.pessoaService.findBy(this.filter)
     .then(resultado => {

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -14,7 +15,6 @@ import { CadastroPessoaComponent } from './pessoa/cadastro-pessoa/cadastro-pesso
 import { InputContentComponent } from './shared/input-content/input-content.component';
 import { SelectComponent } from './shared/select/select.component';
 import { PessoaService } from './pessoa/pessoa.service';
-import { HttpModule } from '@angular/http';
 import { EstadoService } from './estado/estado.service';
 import { CidadeService } from './cidade/cidade.service';
 import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pessoas.component';

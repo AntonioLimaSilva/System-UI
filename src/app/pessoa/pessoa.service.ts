@@ -64,4 +64,13 @@ export class PessoaService {
       .catch(error => ErrorHandler.handle(error));
   }
 
+  upload(files: any) {
+    const formData = new FormData();
+    formData.append('files', files);
+
+    return this.http.post(`${NPJ_API}/fotos`, formData)
+      .map(response => response.json())
+      .catch(error => ErrorHandler.handle(error));
+  }
+
 }
