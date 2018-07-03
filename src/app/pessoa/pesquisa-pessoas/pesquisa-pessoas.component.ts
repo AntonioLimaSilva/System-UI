@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { PessoaService, PessoaFilter } from '../pessoa.service';
 import { Pessoa } from '../../core/model';
+import { NPJ_API } from '../../npj.api';
 
 @Component({
   selector: 'npj-pesquisa-pessoas',
@@ -42,4 +43,8 @@ export class PesquisaPessoasComponent implements OnInit {
     });
   }
 
+  getImagePath(filename: any) {
+    let url = filename === "" || filename === null ? `${NPJ_API}/fotos/thumbnail.pessoa.mock.png` : `${NPJ_API}/fotos/thumbnail.${filename}`;
+    return url;
+  }
 }

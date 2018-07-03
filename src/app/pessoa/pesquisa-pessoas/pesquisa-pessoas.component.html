@@ -55,11 +55,14 @@
                 <button class="btn  btn-primary" (click)="filtrar()" [disabled]="form.invalid" type="submit">Pesquisar</button>
               </div>
             </form>
+
+           
           
             <div class="table-responsive">
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
+                    <th class="table-col-nome">#</th>
                     <th class="table-col-nome">Nome</th>
                     <th class="table-col-pseudonimo">Pesudônimo</th>
                     <th class="table-col-email">Email</th>
@@ -71,6 +74,7 @@
                 
                 <tbody>
                   <tr class="d-flex" *ngFor="let pessoa of pessoas">
+                    <td> <span class="place-info-box-icon"><img [src]="getImagePath(pessoa.foto)"/></span></td>
                     <td class="col-4">{{pessoa.nome}}</td>
                     <td class="col-2">{{pessoa.pseudonimo}}</td>
                     <td class="col-4">{{pessoa.email}}</td>

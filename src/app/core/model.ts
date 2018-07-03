@@ -45,6 +45,10 @@ class Pessoa {
 	foto: string;
     contentType: string;
     endereco = new Endereco();
+
+    get fotoOuMock() {
+        return this.foto === undefined ? "thumbnail.pessoa.mock.png" : this.foto;
+    }
 }
 
 export {EstadoCivil, Estado, Cidade, Endereco, Pessoa}

@@ -73,4 +73,9 @@ export class PessoaService {
       .catch(error => ErrorHandler.handle(error));
   }
 
+  getFiles(filename: any): Observable<any> {
+    return this.http.get(`${NPJ_API}/fotos/${filename}`)
+      .map(resposta => resposta.url)
+      .catch(error => ErrorHandler.handle(error));
+  }
 }

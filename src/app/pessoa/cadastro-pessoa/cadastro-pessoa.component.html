@@ -38,13 +38,14 @@
           <div class="row">              
             <npj-input-content for="nome" label="Nome" errorMessage="Nome deve ser informado">               
               <input id="nome" type="text" size="100" maxlength="100" formControlName="nome" autofocus="autofocus"
-                class="form-control" />
+                class="form-control" autocomplete="off" />
             </npj-input-content>                       
           </div>
 
           <div class="row">             
             <npj-input-content for="pseudonimo" label="Pseudônimo" errorMessage="Pseudônimo deve ser informado"> 
-                <input id="pseudonimo" formControlName="pseudonimo" type="text" size="50" maxlength="50" class="form-control" />
+                <input id="pseudonimo" formControlName="pseudonimo" type="text" size="50" maxlength="50" class="form-control" 
+                  autocomplete="off"/>
             </npj-input-content>
           
             <div class="form-group  col-sm-2">
@@ -72,61 +73,70 @@
           
           <div class="row">
             <npj-input-content for="email" label="Email" errorMessage="Email deve ser informado"> 
-              <input id="email" type="text" formControlName="email" size="100" maxlength="100" class="form-control" />
+              <input id="email" type="text" formControlName="email" size="100" maxlength="100" class="form-control" 
+              autocomplete="off"/>
             </npj-input-content>
           </div>
 
           <div class="row">
             <div class="col-sm-12  form-group">
               <label for="foneResidencial" class="control-label">Fone Residencial</label> 
-              <input id="foneResidencial" size="20" maxlength="20" type="text" class="form-control" formControlName="foneResidencial" />
+              <input id="foneResidencial" size="20" maxlength="20" type="text" class="form-control" formControlName="foneResidencial"
+              autocomplete="off" />
             </div>
           </div>        
 
           <div class="row">
             <npj-input-content for="foneCelular" label="Fone celular" errorMessage="Fone Celular deve ser informado"> 
-              <input id="foneCelular" type="text" size="20" formControlName="foneCelular" maxlength="20" class="form-control" />
+              <input id="foneCelular" type="text" size="20" formControlName="foneCelular" maxlength="20" class="form-control"
+              autocomplete="off" />
             </npj-input-content>
           </div>  
 
           <div class="row">
             <div class="col-sm-12  form-group">
               <label class="control-label" for="rg">RG</label> 
-              <input id="rg" type="text" size="20" maxlength="20" class="form-control" formControlName="rg" />
+              <input id="rg" type="text" size="20" maxlength="20" class="form-control" formControlName="rg"
+              autocomplete="off" />
             </div>
           </div>
 
           <div class="row">
             <npj-input-content for="cpf" label="CPF" errorMessage="CPF deve ser informado"> 
-              <input id="cpf" type="text" size="20" formControlName="cpf" maxlength="20" class="form-control" />
+              <input id="cpf" type="text" size="20" formControlName="cpf" maxlength="20" class="form-control"
+              autocomplete="off" />
             </npj-input-content>
           </div>
 
           <div class="row">
             <div class="col-sm-12  form-group">
               <label class="control-label" for="dataNascimento">Data Nascimento</label> 
-              <input id="dataNascimento" type="text" class="form-control" formControlName="dataNascimento" />
+              <input id="dataNascimento" type="text" class="form-control" formControlName="dataNascimento"
+              autocomplete="off" />
             </div>
           </div>
             
           <div class="row">
             <div class="col-sm-12  form-group">
               <label class="control-label" for="naturalidade">Naturalidade</label> 
-              <input id="naturalidade" type="text" size="100" maxlength="100" class="form-control" formControlName="naturalidade" />
+              <input id="naturalidade" type="text" size="100" maxlength="100" class="form-control" formControlName="naturalidade"
+              autocomplete="off" />
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-12  form-group">
               <label class="control-label" for="nacionalidade">Nacionalidade</label> 
-              <input id="nacionalidade" type="text" size="100" maxlength="100" class="form-control" formControlName="nacionalidade" />
+              <input id="nacionalidade" type="text" size="100" maxlength="100" class="form-control" formControlName="nacionalidade"
+              autocomplete="off" />
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-12  form-group">
               <label class="control-label" for="profissao">Profissão</label> 
-              <input id="profissao" type="text" size="100" maxlength="100" class="form-control" formControlName="profissao" />
+              <input id="profissao" type="text" size="100" maxlength="100" class="form-control" formControlName="profissao"
+              autocomplete="off" />
             </div>
           </div>
           
@@ -142,20 +152,22 @@
 
             <div class="row">
                 <npj-input-content for="logradouro" label="Logradouro" errorMessage="Logradouro deve ser informado">
-                  <input id="logradouro" type="text" size="100" maxlength="100" formControlName="logradouro" class="form-control" />
+                  <input id="logradouro" type="text" size="100" maxlength="100" formControlName="logradouro" class="form-control"
+                  autocomplete="off" />
                 </npj-input-content>
             </div>
             
             <div class="row">
               <div class="form-group  col-sm-12">
                 <label class="control-label" for="bairro">Bairro</label> 
-                <input type="text" class="form-control" size="100" maxlength="100" id="bairro" formControlName="bairro" />
+                <input type="text" class="form-control" size="100" maxlength="100" id="bairro" formControlName="bairro"
+                autocomplete="off" />
               </div>
             </div>
               
             <div class="row">
               <npj-input-content for="cep" label="CEP" errorMessage="CEP deve ser informado"> 
-                <input type="text" class="form-control" id="cep" formControlName="cep" />
+                <input type="text" class="form-control" id="cep" formControlName="cep" autocomplete="off" />
               </npj-input-content>
             </div>
             
@@ -177,8 +189,6 @@
           </div>
 
           <div class="row">
-            <input type="hidden" />
-            <input type="hidden" />
             <div class="form-group  col-sm-12">
               <label class="control-label">Foto</label>
               <input type="file" (change)="inputFileChange($event)"/>
