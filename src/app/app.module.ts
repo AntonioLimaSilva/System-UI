@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
+import { NgxMaskModule } from 'ngx-mask';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
 import { SidebarLeftComponent } from './core/sidebar-left/sidebar-left.component';
@@ -38,6 +41,8 @@ import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pes
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    NgxMaskModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot(ROUTES)
   ],
   providers: [EstadoService, CidadeService, PessoaService],

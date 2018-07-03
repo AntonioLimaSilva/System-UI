@@ -51,22 +51,19 @@
             <div class="form-group  col-sm-2">
               <label class="control-label">Idoso</label>
               <div>
-                <input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
-                  data-on-text="Sim" data-off-text="Não" formControlName="idoso">
+                <input type="checkbox" (change)="fieldChangeIdoso($event)">
               </div>
             </div>
             <div class="form-group  col-sm-3">
               <label class="control-label">Portador de Deficiência</label>
               <div>
-                <input type="checkbox" class="js-checkbox" data-size="small"
-                  data-off-color="danger" data-on-text="Sim" data-off-text="Não" formControlName="portadorDeficiencia">
+                <input type="checkbox" (change)="fieldChangePortador($event)">
               </div>
             </div>
             <div class="form-group  col-sm-3">
               <label class="control-label">Atendimento Preferêncial</label>
               <div>
-                <input type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
-                  data-on-text="Sim" data-off-text="Não" formControlName="atendimentoPreferencial">
+                <input type="checkbox" (change)="fieldChangeAtendimento($event)">
               </div>
             </div>							
           </div>
@@ -82,38 +79,36 @@
             <div class="col-sm-12  form-group">
               <label for="foneResidencial" class="control-label">Fone Residencial</label> 
               <input id="foneResidencial" size="20" maxlength="20" type="text" class="form-control" formControlName="foneResidencial"
-              autocomplete="off" />
+              autocomplete="off" [dropSpecialCharacters]="false" mask="(00)0000-0000" />
             </div>
           </div>        
 
           <div class="row">
             <npj-input-content for="foneCelular" label="Fone celular" errorMessage="Fone Celular deve ser informado"> 
               <input id="foneCelular" type="text" size="20" formControlName="foneCelular" maxlength="20" class="form-control"
-              autocomplete="off" />
+              autocomplete="off" [dropSpecialCharacters]="false" mask="(00)00000-0000" />
             </npj-input-content>
           </div>  
 
           <div class="row">
-            <div class="col-sm-12  form-group">
-              <label class="control-label" for="rg">RG</label> 
+            <npj-input-content for="rg" label="RG" errorMessage="Informe um RG válido"> 
               <input id="rg" type="text" size="20" maxlength="20" class="form-control" formControlName="rg"
               autocomplete="off" />
-            </div>
+            </npj-input-content>           
           </div>
 
           <div class="row">
             <npj-input-content for="cpf" label="CPF" errorMessage="CPF deve ser informado"> 
               <input id="cpf" type="text" size="20" formControlName="cpf" maxlength="20" class="form-control"
-              autocomplete="off" />
+              autocomplete="off" [dropSpecialCharacters]="false" mask="000.000.000-00" />
             </npj-input-content>
           </div>
 
           <div class="row">
-            <div class="col-sm-12  form-group">
-              <label class="control-label" for="dataNascimento">Data Nascimento</label> 
+            <npj-input-content for="dataNascimento" label="Data Nascimento" errorMessage="Informe uma data válida">
               <input id="dataNascimento" type="text" class="form-control" formControlName="dataNascimento"
-              autocomplete="off" />
-            </div>
+                autocomplete="off" [bsConfig]="datePickerConfig" bsDatepicker />
+            </npj-input-content>
           </div>
             
           <div class="row">
@@ -167,7 +162,7 @@
               
             <div class="row">
               <npj-input-content for="cep" label="CEP" errorMessage="CEP deve ser informado"> 
-                <input type="text" class="form-control" id="cep" formControlName="cep" autocomplete="off" />
+                <input type="text" class="form-control" id="cep" formControlName="cep" [dropSpecialCharacters]="false" mask="00.000-000" autocomplete="off" />
               </npj-input-content>
             </div>
             
