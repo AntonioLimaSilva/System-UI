@@ -7,5 +7,6 @@ import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pes
 export const ROUTES: Routes = [
     { path: '', component: HomeComponent },
     { path: 'pessoas/nova', component: CadastroPessoaComponent },
+    { path: 'pessoas/:id', component: CadastroPessoaComponent },
     { path: 'pessoas', component: PesquisaPessoasComponent }
 ]

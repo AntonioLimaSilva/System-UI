@@ -25,5 +25,4 @@ export class EstadoService {
       .catch(error => ErrorHandler.handle(error));
   }
 
-
 }

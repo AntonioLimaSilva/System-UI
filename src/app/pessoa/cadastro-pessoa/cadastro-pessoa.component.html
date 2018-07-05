@@ -51,19 +51,19 @@
             <div class="form-group  col-sm-2">
               <label class="control-label">Idoso</label>
               <div>
-                <input type="checkbox" (change)="fieldChangeIdoso($event)">
+                <input type="checkbox" formControlName="idoso" (change)="fieldChangeIdoso($event)">
               </div>
             </div>
             <div class="form-group  col-sm-3">
               <label class="control-label">Portador de Deficiência</label>
               <div>
-                <input type="checkbox" (change)="fieldChangePortador($event)">
+                <input type="checkbox" formControlName="portadorDeficiencia" (change)="fieldChangePortador($event)">
               </div>
             </div>
             <div class="form-group  col-sm-3">
               <label class="control-label">Atendimento Preferêncial</label>
               <div>
-                <input type="checkbox" (change)="fieldChangeAtendimento($event)">
+                <input type="checkbox" formControlName="atendimentoPreferencial" (change)="fieldChangeAtendimento($event)">
               </div>
             </div>							
           </div>
@@ -167,9 +167,9 @@
             </div>
             
             <div class="row">
-              <div class="form-group  col-sm-12"> 
+              <div class="form-group  col-sm-12" formGroupName="estado">
                 <label class="control-label">Estado</label>           
-                <select class="form-control" (change)="buscarCidadesDoEstado($event.target.value)">
+                <select class="form-control" formControlName="id" (change)="buscarCidadesDoEstado($event.target.value)">
                   <option value="">Selecione um estado</option>
                   <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.nome}}</option>
                 </select>

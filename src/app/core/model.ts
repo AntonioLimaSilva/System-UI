@@ -6,19 +6,19 @@ class EstadoCivil {
 class Estado {
     id: number;
     nome: string;
-    sigla: string;
 }
 
 class Cidade {
     id: number;
     nome: string;
-    estado = new Estado();
 }
 
 class Endereco {
+    id: number;
     logradouro: string;
     bairro: string;
     cep: string;
+    estado = new Estado();
     cidade = new Cidade();
 }
 
@@ -29,7 +29,7 @@ class Pessoa {
 	email: string;
 	foneResidencial: string;
 	foneCelular: string;
-	sexo: string;
+	sexo: string = 'MASCULINO';
 	rg: string;
 	cpf: string;
     dataNascimento: Date;

@@ -34,6 +34,16 @@ export class PessoaService {
         .map(pessoa => pessoa.id)
         .catch(error => ErrorHandler.handle(error));
   }
+
+  update(pessoa: Pessoa): Observable<Pessoa> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${NPJ_API}/pessoas/${pessoa.id}`, JSON.stringify(pessoa), 
+      new RequestOptions({headers}))
+      .map(response => response.json() as Pessoa)
+      .catch(error => ErrorHandler.handle(error));
+  }
   
   findBy(filter: PessoaFilter): Promise<any> {
     const params = new URLSearchParams();
@@ -61,6 +71,12 @@ export class PessoaService {
         }
         return result;
       })
+      .catch(error => ErrorHandler.handle(error));
+  }
+
+  findById(id: number): Observable<Pessoa> {
+    return this.http.get(`${NPJ_API}/pessoas/${id}`)
+      .map(response => response.json())
       .catch(error => ErrorHandler.handle(error));
   }
 

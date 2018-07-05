@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
@@ -39,13 +40,20 @@ export class CadastroPessoaComponent implements OnInit {
     private pessoaService: PessoaService,
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.configurar();
     this.configDatePicker();
     this.estadoService.findAll().subscribe(estados => this.estados = estados);
+
+    const id = this.activatedRoute.snapshot.params['id'];
+
+    if(id) {
+      this.load(id);
+    }
   }
 
   buscarCidadesDoEstado(idEstado: number = -1) {
@@ -54,25 +62,49 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   salvar(pessoa: Pessoa) {
+    if(this.editando) {
+      this.update(pessoa);
+    } else {
+      this.add(pessoa);
+    }
+  }
+  
+  add(pessoa: Pessoa) {
     pessoa.idoso = this.idoso;
     pessoa.portadorDeficiencia = this.portadorDeficiencia;
     pessoa.atendimentoPreferencial = this.atendimentoPreferencial;
     pessoa.foto = this.foto;
     pessoa.contentType = this.contentType;
-
+  
     this.pessoaService.save(pessoa)
       .subscribe((id) => {
         this.formulario.reset();
       });
   }
 
+  update(pessoa: Pessoa) {
+
+    this.pessoaService.update(pessoa)
+      .subscribe(pessoa => console.log(pessoa));
+  }
+
+  load(id: number) {
+    this.pessoaService.findById(id).subscribe(pessoa => {
+      this.formulario.setValue(pessoa);
+    });
+  }
+
   configurar() {
     this.formulario = this.formBuilder.group({
+      id: [],
       nome: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
       pseudonimo: this.formBuilder.control('', [Validators.required]),
       email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
       foneResidencial: this.formBuilder.control(''),
       foneCelular: this.formBuilder.control('', [Validators.required]),
+      foto: [],
+      contentType: [],
+      sexo: [],
       rg: this.formBuilder.control('', [Validators.pattern(this.numberPattern)]),
       cpf: this.formBuilder.control('', [Validators.required]),     
       dataNascimento: this.formBuilder.control('', [Validators.required]),
@@ -80,14 +112,24 @@ export class CadastroPessoaComponent implements OnInit {
       nacionalidade: this.formBuilder.control(''),
       profissao: this.formBuilder.control(''),
       estadoCivil: this.formBuilder.control('', [Validators.required]),
+      idoso: [],
+      portadorDeficiencia: [],
+      atendimentoPreferencial: [],
       endereco: this.formBuilder.group({
+        id: [],
         logradouro: this.formBuilder.control('', Validators.required),
         bairro: this.formBuilder.control(''),
         cep: this.formBuilder.control('', Validators.required),
+        estado: this.formBuilder.group({
+          id: [],
+          nome: []
+        }),
         cidade: this.formBuilder.group({
-          id: this.formBuilder.control('', Validators.required)
+          id: this.formBuilder.control('', Validators.required),
+          nome: []
         })
-      })    
+      }),
+      observacao: []
     });
   }
 
@@ -120,6 +162,10 @@ export class CadastroPessoaComponent implements OnInit {
       containerClass: 'theme-dark-blue',
       dateInputFormat: 'DD/MM/YYYY'
     });
+  }
+
+  get editando() {
+    return Boolean(this.formulario.get('id').value);
   }
 
 }
