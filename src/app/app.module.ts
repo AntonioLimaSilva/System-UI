@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ToastyModule } from 'ng2-toasty';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -41,6 +42,7 @@ import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pes
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    ToastyModule.forRoot(),
     NgxMaskModule.forRoot(),
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot(ROUTES)

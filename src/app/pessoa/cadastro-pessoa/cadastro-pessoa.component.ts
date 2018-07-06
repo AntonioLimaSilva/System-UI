@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+import * as moment from 'moment';
+
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ToastyService } from 'ng2-toasty';
 
 import { Estado, Cidade, EstadoCivil, Pessoa } from '../../core/model';
 import { PessoaService } from '../pessoa.service';
@@ -18,9 +21,14 @@ export class CadastroPessoaComponent implements OnInit {
   datePickerConfig: Partial<BsDatepickerConfig>;
 
   estadosCivis: EstadoCivil[] = [
-    {label: 'Solteiro(a)', value: "SOLTEIRO"},
-    {label: 'Casado(a)', value: "CASADO"},
-    {label: 'Divorciado(a)', value: "DIVORCIADO"}
+    {label: 'Solteiro(a)', value: 'SOLTEIRO' },
+    {label: 'Casado(a)', value: 'CASADO' },
+    {label: 'Divorciado(a)', value: 'DIVORCIADO' }
+  ]
+
+  sexos: any[] = [
+    {label: 'Masculino', value: 'MASCULINO'},
+    {label: 'Feminino', value: 'FEMININO'}
   ]
 
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -41,12 +49,14 @@ export class CadastroPessoaComponent implements OnInit {
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastyService: ToastyService
   ) { }
 
   ngOnInit() {
     this.configurar();
     this.configDatePicker();
+
     this.estadoService.findAll().subscribe(estados => this.estados = estados);
 
     const id = this.activatedRoute.snapshot.params['id'];
@@ -56,7 +66,7 @@ export class CadastroPessoaComponent implements OnInit {
     }
   }
 
-  buscarCidadesDoEstado(idEstado: number = -1) {
+  findAllCidadesBy(idEstado: number = -1) {
     this.cidadeService.findByEstadoId(idEstado)
       .subscribe(cidades => this.cidades = cidades);
   }
@@ -77,20 +87,24 @@ export class CadastroPessoaComponent implements OnInit {
     pessoa.contentType = this.contentType;
   
     this.pessoaService.save(pessoa)
-      .subscribe((id) => {
-        this.formulario.reset();
-      });
+      .subscribe((id) => this.formulario.reset());
+
+    this.toastyService.success('Pessoa adicionada com sucesso!');
   }
 
   update(pessoa: Pessoa) {
-
     this.pessoaService.update(pessoa)
       .subscribe(pessoa => console.log(pessoa));
+
+    this.toastyService.success('Pessoa atualizada com sucesso!');
   }
 
   load(id: number) {
     this.pessoaService.findById(id).subscribe(pessoa => {
-      this.formulario.setValue(pessoa);
+      const p = pessoa;
+      this.findAllCidadesBy(p.endereco.estado.id);
+      p.dataNascimento = moment(p.dataNascimento).toDate();
+      this.formulario.setValue(p);
     });
   }
 

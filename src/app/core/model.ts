@@ -29,7 +29,7 @@ class Pessoa {
 	email: string;
 	foneResidencial: string;
 	foneCelular: string;
-	sexo: string = 'MASCULINO';
+	sexo: string;
 	rg: string;
 	cpf: string;
     dataNascimento: Date;

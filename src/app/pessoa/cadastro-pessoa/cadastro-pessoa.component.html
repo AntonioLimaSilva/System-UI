@@ -37,7 +37,7 @@
         
           <div class="row">              
             <npj-input-content for="nome" label="Nome" errorMessage="Nome deve ser informado">               
-              <input id="nome" type="text" size="100" maxlength="100" formControlName="nome" autofocus="autofocus"
+              <input id="nome" type="text" size="100" maxlength="100" formControlName="nome"
                 class="form-control" autocomplete="off" />
             </npj-input-content>                       
           </div>
@@ -88,7 +88,19 @@
               <input id="foneCelular" type="text" size="20" formControlName="foneCelular" maxlength="20" class="form-control"
               autocomplete="off" [dropSpecialCharacters]="false" mask="(00)00000-0000" />
             </npj-input-content>
-          </div>  
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label for="sexo" class="control-label">Sexo</label>
+              <div class="radio" *ngFor="let sexo of sexos">									
+                <label for="{{sexo.value}}">								
+                  <input id="{{sexo.value}}" type="radio" value="{{sexo.value}}" formControlName="sexo">
+                  {{sexo.label}}											
+                </label>									
+              </div>
+            </div>
+          </div>
 
           <div class="row">
             <npj-input-content for="rg" label="RG" errorMessage="Informe um RG válido"> 
@@ -169,17 +181,25 @@
             <div class="row">
               <div class="form-group  col-sm-12" formGroupName="estado">
                 <label class="control-label">Estado</label>           
-                <select class="form-control" formControlName="id" (change)="buscarCidadesDoEstado($event.target.value)">
+                <select class="form-control" formControlName="id" (change)="findAllCidadesBy($event.target.value)">
                   <option value="">Selecione um estado</option>
                   <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.nome}}</option>
                 </select>
               </div>            
             </div>
            
-            <div class="row" formGroupName="cidade">
-              <npj-input-content for="cidade" label="Cidade" errorMessage="Cidade deve ser informado">
+            <div class="row">
+              <!-- <npj-input-content formGroupName="cidade" for="cidade" label="Cidade" errorMessage="Cidade deve ser informado">
                 <npj-select [options]="cidades" formControlName="id"></npj-select>
-              </npj-input-content>
+              </npj-input-content> -->
+
+              <div class="form-group  col-sm-12" formGroupName="cidade">
+                <label class="control-label">Cidade</label>         
+                <select class="form-control" formControlName="id">
+                  <option value="">Selecione uma cidade</option>
+                  <option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
+                </select>
+              </div>
             </div>           
           </div>
 

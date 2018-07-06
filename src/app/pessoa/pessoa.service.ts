@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import * as moment from 'moment';
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -89,9 +90,14 @@ export class PessoaService {
       .catch(error => ErrorHandler.handle(error));
   }
 
+  /**
+   * Não esta sendo usado
+   * @param filename
+   */
   getFiles(filename: any): Observable<any> {
     return this.http.get(`${NPJ_API}/fotos/${filename}`)
       .map(resposta => resposta.url)
       .catch(error => ErrorHandler.handle(error));
   }
+
 }
