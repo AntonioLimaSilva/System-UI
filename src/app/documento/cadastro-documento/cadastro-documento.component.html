@@ -58,19 +58,19 @@
               </div>
               
               <label class="control-label">Documento</label>
-              <div>
+              <div *ngIf="!hasFilename()">
                 <div class="npj-upload">
                   <i class="glyphicon  glyphicon-cloud-upload"></i> 
                   <span>Arraste o documento aqui ou </span> 
                   <a class="npj-upload-form-file">selecione
-                    <input type="file" (change)="inputFileChange($event)" accept=".doc,.docx,.pdf" />
+                    <input type="file" (change)="inputFileChange($event)" data-max-size="2048" accept=".doc,.docx,.pdf" />
                   </a>
                 </div>
               </div>
             </div>
             <!-- /.col -->	
             
-            <div class="row" >
+            <div class="row" *ngIf="hasFilename()">
               <div class="col-md-4"></div>
               <div class="col-md-4  text-center">
                 <a href="javascript:;" class="thumbnail">
@@ -78,7 +78,7 @@
                     <i style="font-size: 90px;" class="ion-document-text"></i>
                   </div>
                 </a>
-                <button type="button" class="btn  btn-link"><span class="glyphicon  glyphicon-remove"></span></button>
+                <button type="button" (click)="remove()" class="btn  btn-link"><span class="glyphicon  glyphicon-remove"></span></button>
               </div>
               <div class="col-md-4"></div>
             </div>					

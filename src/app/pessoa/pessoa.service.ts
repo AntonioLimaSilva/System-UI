@@ -88,7 +88,7 @@ export class PessoaService {
     const formData = new FormData();
     formData.append('files', files);
 
-    return this.http.post(`${NPJ_API}/files/fotos`, formData)
+    return this.http.post(`${NPJ_API}/fotos`, formData)
       .map(response => response.json())
       .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
   }
@@ -96,16 +96,6 @@ export class PessoaService {
   remove(id: number): Observable<void> {
     return this.http.delete(`${NPJ_API}/pessoas/${id}`)
       .map(() => null)
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
-  }
-
-  /**
-   * Não esta sendo usado
-   * @param filename
-   */
-  getFiles(filename: any): Observable<any> {
-    return this.http.get(`${NPJ_API}/fotos/${filename}`)
-      .map(resposta => resposta.url)
       .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
   }
 
