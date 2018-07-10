@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -21,7 +22,10 @@ import { SelectComponent } from './shared/select/select.component';
 import { PessoaService } from './pessoa/pessoa.service';
 import { EstadoService } from './estado/estado.service';
 import { CidadeService } from './cidade/cidade.service';
+import { ErrorHandlerService } from './core/error-handler.service';
 import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pessoas.component';
+import { CadastroDocumentoComponent } from './documento/cadastro-documento/cadastro-documento.component';
+import { DocumentoService } from './documento/documento.service';
 
 
 @NgModule({
@@ -35,19 +39,21 @@ import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pes
     CadastroPessoaComponent,
     InputContentComponent,
     SelectComponent,
-    PesquisaPessoasComponent
+    PesquisaPessoasComponent,
+    CadastroDocumentoComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     ToastyModule.forRoot(),
     NgxMaskModule.forRoot(),
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [EstadoService, CidadeService, PessoaService],
+  providers: [EstadoService, CidadeService, PessoaService, DocumentoService, ErrorHandlerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

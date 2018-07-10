@@ -37,9 +37,9 @@ class Pessoa {
 	nacionalidade: string;
 	profissao: string;
 	estadoCivil: string;
-	idoso: boolean = false;
-	portadorDeficiencia: boolean = false;
-	atendimentoPreferencial: boolean = false;
+	idoso: boolean;
+	portadorDeficiencia: boolean;
+	atendimentoPreferencial: boolean;
 	observacao: string;
 	dataCriacao: string;
 	foto: string;
@@ -47,4 +47,13 @@ class Pessoa {
     endereco = new Endereco();
 }
 
-export {EstadoCivil, Estado, Cidade, Endereco, Pessoa}
+class Documento {
+    id: number;
+    descricao: string;
+    nome: string;
+    contentType: string;
+    tamanho: number;
+    isPrincipal: boolean;
+}
+
+export {EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento}

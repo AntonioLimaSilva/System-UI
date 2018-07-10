@@ -11,6 +11,7 @@ import { Estado, Cidade, EstadoCivil, Pessoa } from '../../core/model';
 import { PessoaService } from '../pessoa.service';
 import { EstadoService } from '../../estado/estado.service';
 import { CidadeService } from '../../cidade/cidade.service';
+import { NPJ_API } from '../../npj.api';
 
 @Component({
   selector: 'npj-cadastro-pessoa',
@@ -41,6 +42,7 @@ export class CadastroPessoaComponent implements OnInit {
   idoso: boolean = false;
   portadorDeficiencia: boolean = false;
   atendimentoPreferencial: boolean = false;
+  url: any;
 
   formulario: FormGroup;
 
@@ -54,7 +56,7 @@ export class CadastroPessoaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.configurar();
+    this.configure();
     this.configDatePicker();
 
     this.estadoService.findAll().subscribe(estados => this.estados = estados);
@@ -87,16 +89,19 @@ export class CadastroPessoaComponent implements OnInit {
     pessoa.contentType = this.contentType;
   
     this.pessoaService.save(pessoa)
-      .subscribe((id) => this.formulario.reset());
+      .subscribe((id) => {
+        this.formulario.reset();
 
-    this.toastyService.success('Pessoa adicionada com sucesso!');
+        this.toastyService.success('Pessoa adicionada com sucesso!');
+      });
   }
 
   update(pessoa: Pessoa) {
-    this.pessoaService.update(pessoa)
-      .subscribe(pessoa => console.log(pessoa));
+    pessoa.foto = this.foto;
+    pessoa.contentType = this.contentType;
 
-    this.toastyService.success('Pessoa atualizada com sucesso!');
+    this.pessoaService.update(pessoa)
+      .subscribe(pessoa => this.toastyService.success('Pessoa atualizada com sucesso!'));   
   }
 
   load(id: number) {
@@ -104,11 +109,13 @@ export class CadastroPessoaComponent implements OnInit {
       const p = pessoa;
       this.findAllCidadesBy(p.endereco.estado.id);
       p.dataNascimento = moment(p.dataNascimento).toDate();
+      this.url = this.getImagePath(p.foto);
+
       this.formulario.setValue(p);
     });
   }
 
-  configurar() {
+  configure() {
     this.formulario = this.formBuilder.group({
       id: [],
       nome: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
@@ -155,8 +162,15 @@ export class CadastroPessoaComponent implements OnInit {
         arquvio => {
           this.foto = arquvio.fileName;
           this.contentType = arquvio.contentType;
+          this.url = this.getImagePath(this.foto);
         });
     }
+  }
+
+  removeFoto() {
+    this.foto = undefined;
+    this.contentType = undefined;
+    this.url = undefined;
   }
 
   fieldChangeIdoso(value: any) {
@@ -180,6 +194,11 @@ export class CadastroPessoaComponent implements OnInit {
 
   get editando() {
     return Boolean(this.formulario.get('id').value);
+  }
+
+  getImagePath(filename: any) {
+    let url = filename === "" || filename === null ? `${NPJ_API}/fotos/thumbnail.pessoa.mock.png` : `${NPJ_API}/fotos/thumbnail.${filename}`;
+    return url;
   }
 
 }

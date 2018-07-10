@@ -7,19 +7,20 @@ import 'rxjs/add/operator/catch';
 
 import { Cidade } from '../core/model';
 import { NPJ_API } from '../npj.api';
-import { ErrorHandler } from '../app.error-handler';
+import { ErrorHandlerService } from '../core/error-handler.service';
 
 @Injectable()
 export class CidadeService {
 
   constructor(
-    private http: Http
+    private http: Http,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   findByEstadoId(idEstado: number): Observable<Cidade[]> {
     return this.http.get(`${NPJ_API}/cidades/${idEstado}`)
       .map(response => response.json())
-      .catch(error => ErrorHandler.handle(error));
+      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
   }
 
 }

@@ -32,9 +32,8 @@
               <div class="row">
                 <div class="col-sm-6  form-group">
                   <label for="nome" class="control-label">Nome</label> 
-                  <input id="nome" type="text" size="100" maxlength="100" autofocus="autofocus" 
-                    class="form-control" name="nome" ngModel [(ngModel)]="filter.nome" required
-                    placeholder="Pesquisar por nome" autocomplete="off" />
+                  <input id="nome" type="text" size="100" maxlength="100" class="form-control" name="nome"
+                    ngModel [(ngModel)]="filter.nome" required placeholder="Pesquisar por nome" autocomplete="off" />
                 </div>
 
                 <div class="col-sm-4  form-group">
@@ -85,7 +84,8 @@
                         [routerLink]="['/pessoas', pessoa.id]">
                         <i class="glyphicon glyphicon-pencil"></i>
                       </a>
-                      <a class="btn  btn-link  btn-xs js-excluir-btn" title="Excluir" href="">
+                      <a class="btn  btn-link  btn-xs js-excluir-btn" title="Excluir" 
+                        href="javascript:;" (click)="remove(pessoa.id)" >
                         <i class="glyphicon glyphicon-remove"></i>
                       </a>
                     </td>

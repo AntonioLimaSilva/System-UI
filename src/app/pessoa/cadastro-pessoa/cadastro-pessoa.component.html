@@ -206,9 +206,27 @@
           <div class="row">
             <div class="form-group  col-sm-12">
               <label class="control-label">Foto</label>
-              <input type="file" (change)="inputFileChange($event)"/>
+              <div class="npj-upload" *ngIf="url === undefined">
+                <i class="glyphicon  glyphicon-cloud-upload"></i> 
+                <span>Arraste a foto aqui ou </span> 
+                <a class="npj-upload-form-file">selecione
+                  <input type="file" (change)="inputFileChange($event)" accept=".jpg,.jpeg,.png" />
+                </a>
+              </div>
             </div>
           </div>
+
+          <div class="row" *ngIf="url !== undefined">
+            <div class="col-md-4"></div>
+              <div class="col-md-4  text-center">
+                <a href="javascript:;" class="thumbnail">
+                  <img src="{{url}}">
+                </a>
+                <button type="button" (click)="removeFoto()" class="btn  btn-link"><span class="glyphicon  glyphicon-remove"></span></button>
+              </div>
+            <div class="col-md-4"></div>
+          </div>
+
           <!-- /.row -->
         </div>
         <!-- /.box-body -->
