@@ -1,0 +1,105 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Pesquisa de documentos<small>Visualização</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Formulários</a></li>
+      <li class="active">Elementos gerais</li>
+    </ol>
+  </section>
+  
+  <!-- Main content -->
+    <section class="content">
+      <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <div class="row">
+              <div class="col-sm-2">
+                <div class="aw-page-header-controls">
+                  <a class="btn  btn-default" [routerLink]="['/documentos/novo']">
+                    <i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo documento</span>
+                  </a>
+                </div>
+              </div>							
+            </div>
+            
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form #form="ngForm" novalidate>
+              <div class="row">
+                <div class="col-sm-6  form-group">
+                  <label for="nomeFilter" class="control-label">Nome</label> 
+                  <input id="nomeFilter" type="text" size="100" maxlength="100" name="nome" ngModel [(ngModel)]="filter.nome"
+                    class="form-control" placeholder="Pesquisar por nome" autocomplete="off"/>
+                </div>
+                <div class="col-sm-6  form-group">
+                  <label for="descricaoFilter" class="control-label">Descrição</label> 
+                  <input id="descricaoFilter" size="100" maxlength="100" type="text" name="descricao" ngModel [(ngModel)]="filter.descricao"
+                    class="form-control" placeholder="Pesquisar por descrição" autocomplete="off" />
+                </div>
+              </div>
+              
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button class="btn  btn-primary" (click)="search()" type="submit">Pesquisar</button>
+              </div>
+            </form>
+          
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="table-documentos-col-foto"></th>
+                    <th class="table-documentos-col-nome">Nome</th>
+                    <th class="table-documentos-col-email">Descrição</th>
+                    <th class="table-documentos-col-acoes"></th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <tr *ngFor="let doc of documentos">
+                    <td class="text-center">
+                      <span class="glyphicon glyphicon-folder-open"></span>
+                    </td>
+                    <td>{{doc.nome}}</td>
+                    <td>{{doc.descricao}}</td>
+                    <td class="text-center">
+                      <a class="btn  btn-link  btn-xs" title="Editar"
+                        [routerLink]="['/documentos', doc.id]">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                      </a>
+                      <a class="btn  btn-link  btn-xs" title="Excluir">
+                        <i class="glyphicon glyphicon-remove"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!documentos?.length">
+                    <td colspan="7">Nenhum documento encontrado</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li *ngFor="let p of totalPages; let i = index" class="page-item"><a class="page-link" href=""
+                  (click)="setPage(i, $event)" [class.active]="i === filter.page">{{i+1}}</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>		
+</div>

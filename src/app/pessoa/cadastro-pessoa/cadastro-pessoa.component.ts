@@ -11,7 +11,7 @@ import { Estado, Cidade, EstadoCivil, Pessoa } from '../../core/model';
 import { PessoaService } from '../pessoa.service';
 import { EstadoService } from '../../estado/estado.service';
 import { CidadeService } from '../../cidade/cidade.service';
-import { NPJ_API } from '../../npj.api';
+import { API_URL } from '../../api-url';
 
 @Component({
   selector: 'npj-cadastro-pessoa',
@@ -197,7 +197,7 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   getImagePath(filename: any) {
-    let url = filename === "" || filename === null ? `${NPJ_API}/fotos/thumbnail.pessoa.mock.png` : `${NPJ_API}/fotos/thumbnail.${filename}`;
+    let url = filename === "" || filename === null ? `${API_URL}/fotos/thumbnail.pessoa.mock.png` : `${API_URL}/fotos/thumbnail.${filename}`;
     return url;
   }
 

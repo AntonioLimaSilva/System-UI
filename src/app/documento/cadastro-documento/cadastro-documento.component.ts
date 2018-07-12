@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Documento } from '../../core/model';
 import { DocumentoService } from '../documento.service';
 import { ToastyService } from 'ng2-toasty';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'npj-cadastro-documento',
@@ -20,11 +21,25 @@ export class CadastroDocumentoComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private documentoService: DocumentoService,
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private activetedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.configure();
+
+    const id = this.activetedRoute.snapshot.params['id'];
+    
+    if(id) {
+      this.findById(id);
+    }
+  }
+
+  findById(id: number) {
+    this.documentoService.findById(id).subscribe(documento => {
+      console.log(documento)
+      this.formGroup.setValue(documento);
+    })
   }
 
   configure() {
@@ -71,6 +86,14 @@ export class CadastroDocumentoComponent implements OnInit {
   }
 
   save(documento: Documento) {
+    if (this.isUpdate) {
+      this.update(documento);
+    } else {
+      this.add(documento);
+    }
+  }
+  
+  add(documento: Documento) {  
     documento.isPrincipal = documento.isPrincipal === null ? false : documento.isPrincipal;
     
     this.documentoService.save(documento)
@@ -78,14 +101,27 @@ export class CadastroDocumentoComponent implements OnInit {
         null;
         this.formGroup.reset();
         this.currentFileUpload = undefined;
-
+  
         this.toastyService.success('Documento salvo com sucesso!');
       },
       ex => this.toastyService.error('Erro salvando documento!'));
   }
 
+  update(documento: Documento) {
+    this.documentoService.update(documento).subscribe(documento => {
+      console.log(documento);
+
+      this.toastyService.success('Documento atualizado com sucesso!');
+    },
+    ex => this.toastyService.error('Erro atualizando documento!'))
+  }
+
   hasFilename() {
     return Boolean(this.formGroup.get('nome').value);
+  }
+
+  get isUpdate() {
+    return Boolean(this.formGroup.get('id').value);
   }
 
 }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { PessoaService, PessoaFilter } from '../pessoa.service';
 import { Pessoa } from '../../core/model';
-import { NPJ_API } from '../../npj.api';
+import { API_URL } from '../../api-url';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
@@ -24,19 +24,20 @@ export class PesquisaPessoasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.pesquisar();
+    this.search()
   }
 
-  filtrar() {
-    this.pesquisar();
+  search() {
+    this.findBy();
   }
 
   setPage(page, event) {
     event.preventDefault();
-    this.pesquisar(page);
+
+    this.findBy(page);
   }
 
-  pesquisar(page = 0) {
+  findBy(page = 0) {
     this.filter.page = page;
 
     this.pessoaService.findBy(this.filter)
@@ -49,14 +50,14 @@ export class PesquisaPessoasComponent implements OnInit {
   remove(id: number) {
     this.pessoaService.remove(id)
       .subscribe(() => {
-        this.pesquisar();
+        this.findBy();
 
         this.toastyService.success('Pessoa excluída com sucesso');
       }, e => this.toastyService.error('Essa pessoa está sendo referênciado em outra tabela'));
   }
 
   getImagePath(filename: any) {
-    let url = filename === "" || filename === null ? `${NPJ_API}/fotos/thumbnail.pessoa.mock.png` : `${NPJ_API}/fotos/thumbnail.${filename}`;
+    let url = filename === "" || filename === null ? `${API_URL}/fotos/thumbnail.pessoa.mock.png` : `${API_URL}/fotos/thumbnail.${filename}`;
     return url;
   }
 }

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { Pessoa } from '../core/model';
-import { NPJ_API } from '../npj.api';
+import { API_URL } from '../api-url';
 import { ErrorHandlerService } from '../core/error-handler.service';
 
 export class PessoaFilter {
@@ -32,7 +32,7 @@ export class PessoaService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.post(`${NPJ_API}/pessoas`, JSON.stringify(pessoa), 
+    return this.http.post(`${API_URL}/pessoas`, JSON.stringify(pessoa), 
       new RequestOptions({headers}))
         .map(response => response.json())
         .map(pessoa => pessoa.id)
@@ -43,7 +43,7 @@ export class PessoaService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.put(`${NPJ_API}/pessoas/${pessoa.id}`, JSON.stringify(pessoa), 
+    return this.http.put(`${API_URL}/pessoas/${pessoa.id}`, JSON.stringify(pessoa), 
       new RequestOptions({headers}))
       .map(response => response.json() as Pessoa)
       .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
@@ -66,7 +66,7 @@ export class PessoaService {
       params.set('cpf', filter.cpf);
     }
 
-    return this.http.get(`${NPJ_API}/pessoas`, {search: params})
+    return this.http.get(`${API_URL}/pessoas`, {search: params})
       .toPromise()
       .then(response => {
         const result = {
@@ -79,7 +79,7 @@ export class PessoaService {
   }
 
   findById(id: number): Observable<Pessoa> {
-    return this.http.get(`${NPJ_API}/pessoas/${id}`)
+    return this.http.get(`${API_URL}/pessoas/${id}`)
       .map(response => response.json())
       .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
   }
@@ -88,13 +88,13 @@ export class PessoaService {
     const formData = new FormData();
     formData.append('files', files);
 
-    return this.http.post(`${NPJ_API}/fotos`, formData)
+    return this.http.post(`${API_URL}/fotos`, formData)
       .map(response => response.json())
       .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
   }
 
   remove(id: number): Observable<void> {
-    return this.http.delete(`${NPJ_API}/pessoas/${id}`)
+    return this.http.delete(`${API_URL}/pessoas/${id}`)
       .map(() => null)
       .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
   }

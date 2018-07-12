@@ -26,6 +26,7 @@ import { ErrorHandlerService } from './core/error-handler.service';
 import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pessoas.component';
 import { CadastroDocumentoComponent } from './documento/cadastro-documento/cadastro-documento.component';
 import { DocumentoService } from './documento/documento.service';
+import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pesquisa-documentos.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { DocumentoService } from './documento/documento.service';
     InputContentComponent,
     SelectComponent,
     PesquisaPessoasComponent,
-    CadastroDocumentoComponent
+    CadastroDocumentoComponent,
+    PesquisaDocumentosComponent
   ],
   imports: [
     BrowserModule,

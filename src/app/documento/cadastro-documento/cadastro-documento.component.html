@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-sm-2">
             <div class="aw-page-header-controls">
-              <a class="btn  btn-default" href="javascript:;">
+              <a class="btn  btn-default" [routerLink]="['/documentos']">
                 <i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa documentos</span>
               </a>
             </div>
@@ -34,12 +34,11 @@
       <form [formGroup]="formGroup" novalidate>
         <div class="box-body">
           
-          <div class="row">													
-            <div class="col-sm-12  form-group">
-              <label for="nome" class="control-label">Descrição</label> 
-              <input id="nome" type="text" class="form-control" size="100" maxlength="100"
+          <div class="row">           
+            <npj-input-content for="descricao" label="Descrição" errorMessage="Descrição deve ser informado">
+              <input id="descricao" type="text" class="form-control" size="100" maxlength="100"
                 formControlName="descricao" autocomplete="off" />
-            </div>
+            </npj-input-content>
             
             <div class="form-group  col-sm-12">
               <label class="control-label">Príncipal</label>
@@ -89,7 +88,7 @@
         <div class="box-footer">
           <button class="btn  btn-primary" [disabled]="formGroup.invalid" 
             (click)="save(formGroup.value)" type="submit">Salvar</button>
-          <a href="javascript:;"  class="btn btn-info" role="button">Novo documento</a> 
+          <a [routerLink]="['/documentos/novo']"  class="btn btn-info" role="button">Novo documento</a> 
         </div>
       </form>
     </div>
