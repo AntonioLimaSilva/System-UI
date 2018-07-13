@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -27,7 +26,7 @@ import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pes
 import { CadastroDocumentoComponent } from './documento/cadastro-documento/cadastro-documento.component';
 import { DocumentoService } from './documento/documento.service';
 import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pesquisa-documentos.component';
-
+import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +41,13 @@ import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pes
     SelectComponent,
     PesquisaPessoasComponent,
     CadastroDocumentoComponent,
-    PesquisaDocumentosComponent
+    PesquisaDocumentosComponent,
+    ModalRemoveComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
     ToastyModule.forRoot(),
     NgxMaskModule.forRoot(),

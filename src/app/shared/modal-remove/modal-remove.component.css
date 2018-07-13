@@ -1,0 +1,7 @@
+.customBtn {
+    background: #e2e2e2;
+}
+
+.customBtn .glyphicon-trash {
+    color: red;
+}

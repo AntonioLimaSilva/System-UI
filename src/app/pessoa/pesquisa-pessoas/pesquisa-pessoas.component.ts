@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ToastyService } from 'ng2-toasty';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 import { PessoaService, PessoaFilter } from '../pessoa.service';
 import { Pessoa } from '../../core/model';
@@ -20,7 +20,8 @@ export class PesquisaPessoasComponent implements OnInit {
 
   constructor(
     private pessoaService: PessoaService,
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -41,7 +42,7 @@ export class PesquisaPessoasComponent implements OnInit {
     this.filter.page = page;
 
     this.pessoaService.findBy(this.filter)
-    .then(resultado => {
+    .subscribe(resultado => {
       this.pessoas = resultado.pessoas,
       this.totalPages = new Array(resultado.totalPages);
     });
@@ -53,7 +54,10 @@ export class PesquisaPessoasComponent implements OnInit {
         this.findBy();
 
         this.toastyService.success('Pessoa excluída com sucesso');
-      }, e => this.toastyService.error('Essa pessoa está sendo referênciado em outra tabela'));
+      }, error => {
+        this.toastyService.error('Essa pessoa está sendo referênciado em outra tabela');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      });
   }
 
   getImagePath(filename: any) {

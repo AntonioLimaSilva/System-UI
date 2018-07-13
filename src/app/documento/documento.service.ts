@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/toPromise';
 
 import { API_URL } from '../api-url';
-import { ErrorHandlerService } from '../core/error-handler.service';
 import { Documento } from '../core/model';
 
 export class DocumentoFilter {
@@ -22,9 +18,7 @@ export class DocumentoFilter {
 export class DocumentoService {
 
   constructor(
-    private httpClient: HttpClient,
-    private http: Http,
-    private errorHandlerService: ErrorHandlerService
+    private httpClient: HttpClient
   ) { }
 
   upload(file: File):  Observable<HttpEvent<{}>> {
@@ -37,58 +31,60 @@ export class DocumentoService {
     });
 
     return this.httpClient.request(req)
-      .map(response => response)
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+      .map(response => response);
   }
 
   save(documento: Documento): Observable<Documento> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
 
-    return this.http.post(`${API_URL}/documentos`, JSON.stringify(documento), {headers})
-      .map(response => response.json())
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.post<Documento>(`${API_URL}/documentos`, documento, {headers})
+      .map(response => response);
   }
 
   update(documento: Documento): Observable<Documento> {
-    const headers = new Headers();
+    let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.put(`${API_URL}/documentos/${documento.id}`, JSON.stringify(documento),
-      new RequestOptions({headers}))
-      .map(response => response.json())
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.put<Documento>(`${API_URL}/documentos/${documento.id}`, documento, {headers})
+      .map(response => null);
   }
 
   findBy(filter: DocumentoFilter): Observable<any> {
-    const params = new URLSearchParams();
-    params.set('page', filter.page.toString());
-    params.set('size', filter.totalItems.toString());
+    let params = new HttpParams({
+      fromObject: {
+        page:  filter.page.toString(),
+        size: filter.totalItems.toString()
+      }
+    });
 
     if(filter.nome) {
-      params.set('nome', filter.nome);
+      params = params.append('nome', filter.nome);
     }
 
     if(filter.descricao) {
-      params.set('descricao', filter.descricao);
+      params = params.append('descricao', filter.descricao);
     }
 
-    return this.http.get(`${API_URL}/documentos`, {params})     
+    return this.httpClient.get<any>(`${API_URL}/documentos`, {params})     
       .map(response => { 
        const content = { 
-          content: response.json().content,
-          totalPages: response.json().totalPages
+          content: response.content,
+          totalPages: response.totalPages
         };
 
         return content;
-      })
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+      });
+  }
+
+  remove(id: number): Observable<void> {
+    return this.httpClient.delete(`${API_URL}/documentos/${id}`)
+      .map(() => null);
   }
 
   findById(id: number): Observable<Documento> {
-    return this.http.get(`${API_URL}/documentos/${id}`)
-      .map(response => response.json())
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.get<Documento>(`${API_URL}/documentos/${id}`)
+      .map(response => response);
   }
 
 }

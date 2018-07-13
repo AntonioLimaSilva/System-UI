@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Documento } from '../../core/model';
 import { DocumentoService, DocumentoFilter } from '../documento.service';
 import { ToastyService } from 'ng2-toasty';
+import { Observable } from 'rxjs/Rx';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'npj-pesquisa-documentos',
@@ -15,7 +17,8 @@ export class PesquisaDocumentosComponent implements OnInit {
 
   constructor(
     private documentoService: DocumentoService,
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -34,13 +37,26 @@ export class PesquisaDocumentosComponent implements OnInit {
         this.documentos = documentos.content;
         this.totalPages = new Array(documentos.totalPages);
       }, 
-      ex => this.toastyService.error('Erro na consulta de documentos'));
+        error => {this.toastyService.error('Erro na consulta de documentos');
+        return Observable.throw(this.errorHandlerService.handle(error));
+    });
   }
 
   setPage(page, event) {
     event.preventDefault();
 
     this.findBy(page);
+  }
+
+  remove(id: number) {
+    this.documentoService.remove(id).subscribe(() => {
+      this.findBy();
+
+      this.toastyService.success('Documento excluído com sucesso!');
+    },
+      error => {this.toastyService.error('Erro excluíndo documento!');
+      return Observable.throw(this.errorHandlerService.handle(error));
+    });
   }
 
 }

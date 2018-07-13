@@ -5,7 +5,7 @@ import { ToastyService } from 'ng2-toasty';
 @Injectable()
 export class ErrorHandlerService {
 
-  constructor(private toastyService: ToastyService) { }
+  constructor() { }
 
   handle(erro: Response | any) {
     let errorMessage: string;

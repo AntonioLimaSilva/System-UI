@@ -6,12 +6,14 @@ import * as moment from 'moment';
 
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastyService } from 'ng2-toasty';
+import { Observable } from 'rxjs/Rx';
 
 import { Estado, Cidade, EstadoCivil, Pessoa } from '../../core/model';
 import { PessoaService } from '../pessoa.service';
 import { EstadoService } from '../../estado/estado.service';
 import { CidadeService } from '../../cidade/cidade.service';
 import { API_URL } from '../../api-url';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'npj-cadastro-pessoa',
@@ -52,7 +54,8 @@ export class CadastroPessoaComponent implements OnInit {
     private cidadeService: CidadeService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -91,17 +94,27 @@ export class CadastroPessoaComponent implements OnInit {
     this.pessoaService.save(pessoa)
       .subscribe((id) => {
         this.formulario.reset();
-
+        this.removeFoto();
+        
         this.toastyService.success('Pessoa adicionada com sucesso!');
-      });
+      },
+      error => {
+        this.toastyService.error('Erro adicionada pessoa!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+    });
   }
 
   update(pessoa: Pessoa) {
     pessoa.foto = this.foto;
     pessoa.contentType = this.contentType;
 
-    this.pessoaService.update(pessoa)
-      .subscribe(pessoa => this.toastyService.success('Pessoa atualizada com sucesso!'));   
+    this.pessoaService.update(pessoa).subscribe(pessoa => {
+      this.toastyService.success('Pessoa atualizada com sucesso!');
+    
+    }, error => {
+      this.toastyService.error('Erro atualizada pessoa!');
+      return Observable.throw(this.errorHandlerService.handle(error));
+    });   
   }
 
   load(id: number) {
@@ -112,6 +125,10 @@ export class CadastroPessoaComponent implements OnInit {
       this.url = this.getImagePath(p.foto);
 
       this.formulario.setValue(p);
+    },
+    error => {
+        this.toastyService.error('Erro ao buscar pessoa!');
+        return Observable.throw(this.errorHandlerService.handle(error));
     });
   }
 
@@ -162,8 +179,12 @@ export class CadastroPessoaComponent implements OnInit {
         arquvio => {
           this.foto = arquvio.fileName;
           this.contentType = arquvio.contentType;
-          this.url = this.getImagePath(this.foto);
-        });
+          this.url = this.getImagePathTemp(this.foto);
+        },
+        error => {
+          this.toastyService.error('Error ao enviar foto');
+          return Observable.throw(this.errorHandlerService.handle(error));
+      });
     }
   }
 
@@ -198,6 +219,11 @@ export class CadastroPessoaComponent implements OnInit {
 
   getImagePath(filename: any) {
     let url = filename === "" || filename === null ? `${API_URL}/fotos/thumbnail.pessoa.mock.png` : `${API_URL}/fotos/thumbnail.${filename}`;
+    return url;
+  }
+
+  getImagePathTemp(filename: any) {
+    let url = `${API_URL}/fotos/temp/${filename}`;
     return url;
   }
 

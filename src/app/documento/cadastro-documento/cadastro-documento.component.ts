@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Documento } from '../../core/model';
 import { DocumentoService } from '../documento.service';
 import { ToastyService } from 'ng2-toasty';
-import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'npj-cadastro-documento',
@@ -22,7 +25,8 @@ export class CadastroDocumentoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private documentoService: DocumentoService,
     private toastyService: ToastyService,
-    private activetedRoute: ActivatedRoute
+    private activetedRoute: ActivatedRoute,
+    private errorHandlerService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -37,9 +41,13 @@ export class CadastroDocumentoComponent implements OnInit {
 
   findById(id: number) {
     this.documentoService.findById(id).subscribe(documento => {
-      console.log(documento)
       this.formGroup.setValue(documento);
-    })
+    },
+      error => {
+        this.toastyService.error('Error buscando documento!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      }
+    );
   }
 
   configure() {
@@ -70,7 +78,11 @@ export class CadastroDocumentoComponent implements OnInit {
           this.formGroup.controls['contentType'].patchValue(doc.contentType);
           this.formGroup.controls['tamanho'].patchValue(doc.size);
        }
-     }, ex => this.toastyService.error('Erro fazendo upload do arquivo!'))
+     }, error => {
+        this.toastyService.error('Erro fazendo upload do arquivo!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      }   
+    );
   
      this.selectedFiles = undefined
 
@@ -98,22 +110,26 @@ export class CadastroDocumentoComponent implements OnInit {
     
     this.documentoService.save(documento)
       .subscribe(documento => {
-        null;
         this.formGroup.reset();
         this.currentFileUpload = undefined;
   
         this.toastyService.success('Documento salvo com sucesso!');
       },
-      ex => this.toastyService.error('Erro salvando documento!'));
+      error => {
+        this.toastyService.error('Erro salvando documento!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      }
+    );
   }
 
   update(documento: Documento) {
     this.documentoService.update(documento).subscribe(documento => {
-      console.log(documento);
-
-      this.toastyService.success('Documento atualizado com sucesso!');
-    },
-    ex => this.toastyService.error('Erro atualizando documento!'))
+        this.toastyService.success('Documento atualizado com sucesso!');
+      },
+        error => {this.toastyService.error('Erro atualizando documento!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      }
+    );
   }
 
   hasFilename() {

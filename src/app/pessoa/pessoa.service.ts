@@ -4,13 +4,11 @@ import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import * as moment from 'moment';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 import { Pessoa } from '../core/model';
 import { API_URL } from '../api-url';
-import { ErrorHandlerService } from '../core/error-handler.service';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class PessoaFilter {
   nome: string;
@@ -25,78 +23,72 @@ export class PessoaService {
 
   constructor(
     private http: Http,
-    private errorHandlerService: ErrorHandlerService
+    private httpClient: HttpClient
   ) { }
 
-  save(pessoa: Pessoa): Observable<string> {
-    const headers = new Headers();
+  save(pessoa: Pessoa): Observable<number> {
+    const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.post(`${API_URL}/pessoas`, JSON.stringify(pessoa), 
-      new RequestOptions({headers}))
-        .map(response => response.json())
-        .map(pessoa => pessoa.id)
-        .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.post<Pessoa>(`${API_URL}/pessoas`, pessoa, {headers})
+        .map(response => response)
+        .map(pessoa => pessoa.id);
   }
 
   update(pessoa: Pessoa): Observable<Pessoa> {
-    const headers = new Headers();
+    const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
-    return this.http.put(`${API_URL}/pessoas/${pessoa.id}`, JSON.stringify(pessoa), 
-      new RequestOptions({headers}))
-      .map(response => response.json() as Pessoa)
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.put<Pessoa>(`${API_URL}/pessoas/${pessoa.id}`, pessoa, {headers})
+      .map(response => response);
   }
   
-  findBy(filter: PessoaFilter): Promise<any> {
-    const params = new URLSearchParams();
-    params.set('page', filter.page.toString());
-    params.set('size', filter.totalItems.toString());
+  findBy(filter: PessoaFilter): Observable<any> {
+    let params = new HttpParams({
+      fromObject: {
+        page: filter.page.toString(),
+        size:  filter.totalItems.toString()
+      }
+    });
     
     if(filter.nome) {
-      params.set('nome', filter.nome);
+      params = params.append('nome', filter.nome);
     }
 
     if(filter.pseudonimo) {
-      params.set('pseudonimo', filter.pseudonimo);
+      params = params.append('pseudonimo', filter.pseudonimo);
     }
 
     if(filter.cpf) {
-      params.set('cpf', filter.cpf);
+      params = params.append('cpf', filter.cpf);
     }
 
-    return this.http.get(`${API_URL}/pessoas`, {search: params})
-      .toPromise()
-      .then(response => {
+    return this.httpClient.get<any>(`${API_URL}/pessoas`, { params})
+      .map(response => {
         const result = {
-          pessoas: response.json().content,
-          totalPages: response.json().totalPages
+          pessoas: response.content,
+          totalPages: response.totalPages
         }
         return result;
-      })
-      .catch(error => this.errorHandlerService.handle(error));
+      });
   }
 
   findById(id: number): Observable<Pessoa> {
-    return this.http.get(`${API_URL}/pessoas/${id}`)
-      .map(response => response.json())
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.get<Pessoa>(`${API_URL}/pessoas/${id}`)
+      .map(response => response);
   }
 
-  upload(files: any) {
+  upload(files: any): Observable<any> {
     const formData = new FormData();
     formData.append('files', files);
 
-    return this.http.post(`${API_URL}/fotos`, formData)
-      .map(response => response.json())
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.post(`${API_URL}/fotos`, formData)
+      .map(response => response);
   }
 
   remove(id: number): Observable<void> {
-    return this.http.delete(`${API_URL}/pessoas/${id}`)
-      .map(() => null)
-      .catch(error => Observable.throw(this.errorHandlerService.handle(error)));
+    return this.httpClient.delete(`${API_URL}/pessoas/${id}`)
+      .map(() => null);
   }
 
 }
