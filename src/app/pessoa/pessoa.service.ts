@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import * as moment from 'moment';
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Pessoa } from '../core/model';
 import { API_URL } from '../api-url';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class PessoaFilter {
   nome: string;
@@ -22,7 +20,6 @@ export class PessoaFilter {
 export class PessoaService {
 
   constructor(
-    private http: Http,
     private httpClient: HttpClient
   ) { }
 

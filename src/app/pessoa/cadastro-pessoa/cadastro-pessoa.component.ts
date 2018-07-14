@@ -62,7 +62,12 @@ export class CadastroPessoaComponent implements OnInit {
     this.configure();
     this.configDatePicker();
 
-    this.estadoService.findAll().subscribe(estados => this.estados = estados);
+    this.estadoService.findAll().subscribe(estados => { 
+        this.estados = estados;
+      },
+      error => {
+        return Observable.throw(this.errorHandlerService.handle(error));
+      });
 
     const id = this.activatedRoute.snapshot.params['id'];
 
@@ -73,7 +78,12 @@ export class CadastroPessoaComponent implements OnInit {
 
   findAllCidadesBy(idEstado: number = -1) {
     this.cidadeService.findByEstadoId(idEstado)
-      .subscribe(cidades => this.cidades = cidades);
+      .subscribe(cidades => { 
+        this.cidades = cidades;
+      },
+      error => {
+        return Observable.throw(this.errorHandlerService.handle(error));
+      });
   }
 
   salvar(pessoa: Pessoa) {

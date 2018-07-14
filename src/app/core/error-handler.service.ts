@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ToastyService } from 'ng2-toasty';
 
 @Injectable()
@@ -7,13 +7,13 @@ export class ErrorHandlerService {
 
   constructor() { }
 
-  handle(erro: Response | any) {
+  handle(error: any) {
     let errorMessage: string;
 
-    if(erro instanceof Response) {
-        errorMessage = `Erro ${erro.status} ao acessar a url ${erro.url} - ${erro.statusText}`;
+    if(error instanceof HttpErrorResponse) {
+        errorMessage = `Erro ${error.status} ao acessar a url ${error.url} - ${error.statusText}`;
     } else {
-        errorMessage = erro.toString();
+        errorMessage = error.toString();
     }
 
     console.log(errorMessage);
