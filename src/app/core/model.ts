@@ -56,4 +56,10 @@ class Documento {
     isPrincipal: boolean;
 }
 
-export {EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento}
+class Assistido {
+    id: number;
+    
+    constructor(public pessoa: Pessoa) { }
+}
+
+export {EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento, Assistido}

@@ -32,8 +32,8 @@
       </div>
       <!-- /.box-header -->
 
-      <form [formGroup]="formulario" novalidate>				
-        <div class="box-body">
+      <div class="box-body">
+        <form [formGroup]="formulario" novalidate>				
         
           <div class="row">              
             <npj-input-content for="nome" label="Nome" errorMessage="Nome deve ser informado">               
@@ -95,7 +95,7 @@
               <label for="sexo" class="control-label">Sexo</label>
               <div class="radio" *ngFor="let sexo of sexos">									
                 <label for="{{sexo.value}}">								
-                  <input id="{{sexo.value}}" type="radio" value="{{sexo.value}}" formControlName="sexo">
+                  <input id="{{sexo.value}}" type="radio" value="{{sexo.value}}" [checked]="sexo.value === 'MASCULINO'" formControlName="sexo">
                   {{sexo.label}}											
                 </label>									
               </div>
@@ -226,7 +226,7 @@
               </div>
             <div class="col-md-4"></div>
           </div>
-
+        </form>
           <!-- /.row -->
         </div>
         <!-- /.box-body -->
@@ -238,14 +238,13 @@
             </button>
             
             <ul class="dropdown-menu">
-              <li><a href="#" class="js-submit-btn">Salvar e transformar em assistido</a></li>
-              <li><a href="#" class="js-submit-btn">Salvar e transformar em réu</a></li>
+              <li></li>
+              <li><a href="javascript:;" (click)="transferToAssistido()">Salvar e transformar em assistido</a></li>
             </ul>
           </div>
-          
+          <npj-modal-confirmation (transferToAssistido)="transferToAssistido($event)" [pessoa]="formulario.value"></npj-modal-confirmation>       
           <a [routerLink]="['/pessoas/nova']" class="btn btn-info" role="button">Nova pessoa</a>
         </div>
-      </form>
     </div>
     <!-- /.box -->
   </section>

@@ -27,6 +27,8 @@ import { CadastroDocumentoComponent } from './documento/cadastro-documento/cadas
 import { DocumentoService } from './documento/documento.service';
 import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pesquisa-documentos.component';
 import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.component';
+import { ModalConfirmationComponent } from './shared/modal-confirmation/modal-confirmation.component';
+import { AssistidoService } from './assistido/assistido.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.compone
     PesquisaPessoasComponent,
     CadastroDocumentoComponent,
     PesquisaDocumentosComponent,
-    ModalRemoveComponent
+    ModalRemoveComponent,
+    ModalConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,14 @@ import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.compone
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [EstadoService, CidadeService, PessoaService, DocumentoService, ErrorHandlerService],
+  providers: [
+    EstadoService,
+    CidadeService,
+    PessoaService,
+    DocumentoService,
+    AssistidoService,
+    ErrorHandlerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

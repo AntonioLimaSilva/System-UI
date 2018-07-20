@@ -8,12 +8,13 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastyService } from 'ng2-toasty';
 import { Observable } from 'rxjs/Rx';
 
-import { Estado, Cidade, EstadoCivil, Pessoa } from '../../core/model';
+import { Estado, Cidade, EstadoCivil, Pessoa, Assistido } from '../../core/model';
 import { PessoaService } from '../pessoa.service';
 import { EstadoService } from '../../estado/estado.service';
 import { CidadeService } from '../../cidade/cidade.service';
 import { API_URL } from '../../api-url';
 import { ErrorHandlerService } from '../../core/error-handler.service';
+import { AssistidoService } from '../../assistido/assistido.service';
 
 @Component({
   selector: 'npj-cadastro-pessoa',
@@ -52,6 +53,7 @@ export class CadastroPessoaComponent implements OnInit {
     private pessoaService: PessoaService,
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
+    private assistidoService: AssistidoService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private toastyService: ToastyService,
@@ -103,7 +105,6 @@ export class CadastroPessoaComponent implements OnInit {
   
     this.pessoaService.save(pessoa)
       .subscribe((id) => {
-        this.formulario.reset();
         this.removeFoto();
         
         this.toastyService.success('Pessoa adicionada com sucesso!');
@@ -118,13 +119,26 @@ export class CadastroPessoaComponent implements OnInit {
     pessoa.foto = this.foto;
     pessoa.contentType = this.contentType;
 
-    this.pessoaService.update(pessoa).subscribe(pessoa => {
-      this.toastyService.success('Pessoa atualizada com sucesso!');
-    
-    }, error => {
-      this.toastyService.error('Erro atualizada pessoa!');
-      return Observable.throw(this.errorHandlerService.handle(error));
-    });   
+    this.pessoaService.update(pessoa).subscribe(pessoa => 
+      {
+        this.toastyService.success('Pessoa atualizada com sucesso!');   
+      }, error => {
+        this.toastyService.error('Erro atualizada pessoa!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      });   
+  }
+
+  transferToAssistido(pessoa: Pessoa) {
+    this.pessoaService.saveAndTransferToAssistido(pessoa)
+      .subscribe(id => {
+        console.log(id);
+        this.formulario.reset();
+
+        this.toastyService.success('Pessoa salva e transformada em assistido com sucesso!');
+      }, error => {
+        this.toastyService.error('Erro salvando e transformando em assistido!');
+        return Observable.throw(this.errorHandlerService.handle(error));
+      });
   }
 
   load(id: number) {
