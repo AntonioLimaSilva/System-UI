@@ -230,19 +230,9 @@
           <!-- /.row -->
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-          <div class="btn-group">
-            <button [disabled]="formulario.invalid" type="submit" (click)="salvar(formulario.value)" class="btn  btn-primary">Salvar</button>
-            <button [disabled]="formulario.invalid" type="button" class="btn  btn-primary  dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-            </button>
-            
-            <ul class="dropdown-menu">
-              <li></li>
-              <li><a href="javascript:;" (click)="transferToAssistido()">Salvar e transformar em assistido</a></li>
-            </ul>
-          </div>
-          <npj-modal-confirmation (transferToAssistido)="transferToAssistido($event)" [pessoa]="formulario.value"></npj-modal-confirmation>       
+        <div class="box-footer">         
+          <button [disabled]="formulario.invalid" type="submit" (click)="salvar(formulario.value)" class="btn  btn-primary">Salvar</button>
+          <button [disabled]="!formulario.get('id').value" type="submit" (click)="transferToAssistido()" class="btn  btn-primary">Gerar assistido</button>              
           <a [routerLink]="['/pessoas/nova']" class="btn btn-info" role="button">Nova pessoa</a>
         </div>
     </div>

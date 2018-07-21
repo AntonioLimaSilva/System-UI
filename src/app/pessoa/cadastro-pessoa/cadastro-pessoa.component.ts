@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import * as moment from 'moment';
 
@@ -45,7 +45,9 @@ export class CadastroPessoaComponent implements OnInit {
   idoso: boolean = false;
   portadorDeficiencia: boolean = false;
   atendimentoPreferencial: boolean = false;
+  sexo: string = 'MASCULINO';
   url: any;
+  id: number;
 
   formulario: FormGroup;
 
@@ -56,6 +58,7 @@ export class CadastroPessoaComponent implements OnInit {
     private assistidoService: AssistidoService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private toastyService: ToastyService,
     private errorHandlerService: ErrorHandlerService
   ) { }
@@ -71,10 +74,10 @@ export class CadastroPessoaComponent implements OnInit {
         return Observable.throw(this.errorHandlerService.handle(error));
       });
 
-    const id = this.activatedRoute.snapshot.params['id'];
+    this.id = this.activatedRoute.snapshot.params['id'];
 
-    if(id) {
-      this.load(id);
+    if(this.id) {
+      this.load(this.id);
     }
   }
 
@@ -97,15 +100,12 @@ export class CadastroPessoaComponent implements OnInit {
   }
   
   add(pessoa: Pessoa) {
-    pessoa.idoso = this.idoso;
-    pessoa.portadorDeficiencia = this.portadorDeficiencia;
-    pessoa.atendimentoPreferencial = this.atendimentoPreferencial;
-    pessoa.foto = this.foto;
-    pessoa.contentType = this.contentType;
+    this.preparePessoa(pessoa);
   
     this.pessoaService.save(pessoa)
       .subscribe((id) => {
-        this.removeFoto();
+        //this.removeFoto();
+        this.router.navigate(['/pessoas', id]);
         
         this.toastyService.success('Pessoa adicionada com sucesso!');
       },
@@ -116,8 +116,9 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   update(pessoa: Pessoa) {
-    pessoa.foto = this.foto;
-    pessoa.contentType = this.contentType;
+    //pessoa.foto = this.foto;
+   // pessoa.contentType = this.contentType;
+   this.preparePessoa(pessoa);
 
     this.pessoaService.update(pessoa).subscribe(pessoa => 
       {
@@ -128,17 +129,10 @@ export class CadastroPessoaComponent implements OnInit {
       });   
   }
 
-  transferToAssistido(pessoa: Pessoa) {
-    this.pessoaService.saveAndTransferToAssistido(pessoa)
-      .subscribe(id => {
-        console.log(id);
-        this.formulario.reset();
+  transferToAssistido() {
+    this.assistidoService.setIdPessoa(this.id);
 
-        this.toastyService.success('Pessoa salva e transformada em assistido com sucesso!');
-      }, error => {
-        this.toastyService.error('Erro salvando e transformando em assistido!');
-        return Observable.throw(this.errorHandlerService.handle(error));
-      });
+    this.router.navigate(['/assistidos/novo']);
   }
 
   load(id: number) {
@@ -235,6 +229,15 @@ export class CadastroPessoaComponent implements OnInit {
       containerClass: 'theme-dark-blue',
       dateInputFormat: 'DD/MM/YYYY'
     });
+  }
+
+  preparePessoa(pessoa: Pessoa) {
+    pessoa.idoso = this.idoso;
+    pessoa.portadorDeficiencia = this.portadorDeficiencia;
+    pessoa.atendimentoPreferencial = this.atendimentoPreferencial;
+    pessoa.sexo = pessoa.sexo === null ? this.sexo : pessoa.sexo;
+    pessoa.foto = this.foto;
+    pessoa.contentType = this.contentType;
   }
 
   get editando() {

@@ -27,8 +27,8 @@ import { CadastroDocumentoComponent } from './documento/cadastro-documento/cadas
 import { DocumentoService } from './documento/documento.service';
 import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pesquisa-documentos.component';
 import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.component';
-import { ModalConfirmationComponent } from './shared/modal-confirmation/modal-confirmation.component';
 import { AssistidoService } from './assistido/assistido.service';
+import { CadastroAssistidoComponent } from './assistido/cadastro-assistido/cadastro-assistido.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { AssistidoService } from './assistido/assistido.service';
     CadastroDocumentoComponent,
     PesquisaDocumentosComponent,
     ModalRemoveComponent,
-    ModalConfirmationComponent
+    CadastroAssistidoComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { CadastroPessoaComponent } from './pessoa/cadastro-pessoa/cadastro-pesso
 import { PesquisaPessoasComponent } from './pessoa/pesquisa-pessoas/pesquisa-pessoas.component';
 import { CadastroDocumentoComponent } from './documento/cadastro-documento/cadastro-documento.component';
 import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pesquisa-documentos.component';
+import { CadastroAssistidoComponent } from './assistido/cadastro-assistido/cadastro-assistido.component';
 
 export const ROUTES: Routes = [
     { path: '', component: HomeComponent },
@@ -13,5 +14,6 @@ export const ROUTES: Routes = [
     { path: 'pessoas/:id', component: CadastroPessoaComponent },
     { path: 'documentos/novo', component: CadastroDocumentoComponent },
     { path: 'documentos', component: PesquisaDocumentosComponent },
-    { path: 'documentos/:id', component: CadastroDocumentoComponent }
+    { path: 'documentos/:id', component: CadastroDocumentoComponent },
+    { path: 'assistidos/novo', component: CadastroAssistidoComponent }
 ]
