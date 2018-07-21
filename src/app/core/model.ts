@@ -58,8 +58,10 @@ class Documento {
 
 class Assistido {
     id: number;
-    
-    constructor(public pessoa: Pessoa) { }
+    pessoa: {
+        id: number;
+        nome: string;
+    };
 }
 
 export {EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento, Assistido}

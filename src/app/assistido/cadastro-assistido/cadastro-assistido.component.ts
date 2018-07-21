@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+import { ToastyService } from 'ng2-toasty';
+import { Observable } from 'rxjs/Rx';
+
 import { AssistidoService } from '../assistido.service';
-import { Pessoa } from '../../core/model';
+import { Pessoa, Assistido } from '../../core/model';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'npj-cadastro-assistido',
@@ -8,15 +14,31 @@ import { Pessoa } from '../../core/model';
 })
 export class CadastroAssistidoComponent implements OnInit {
 
-  pessoa: Pessoa;
+  pessoa: any;
+  assistido = new Assistido();
 
-  constructor(private assistidoService: AssistidoService) { }
+  constructor(
+    private assistidoService: AssistidoService,
+    private toastyService: ToastyService,
+    private errorHandlerService: ErrorHandlerService
+  ) { }
 
   ngOnInit() {    
-    this.assistidoService.findByPessoaId().subscribe(pessoa => { 
-      this.pessoa = pessoa;
-      console.log(this.pessoa);
+    this.assistidoService.findByPessoaId().subscribe(pessoa => {   
+      this.assistido.pessoa = this.pessoa = { id: pessoa.id, nome: pessoa.nome };
     });
+  }
+  
+  save(form: FormGroup) {
+    this.assistidoService.save(this.assistido).subscribe(id => {
+      form.reset();
+
+      this.toastyService.success('Assistido salvo com sucesso');
+    }, error => {
+      this.toastyService.error('Erro salvando assistido');
+      return Observable.throw(this.errorHandlerService.handle(error));
+    })
+
   }
 
 }

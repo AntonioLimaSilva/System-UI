@@ -32,15 +32,6 @@ export class PessoaService {
         .map(pessoa => pessoa.id);
   }
 
-  saveAndTransferToAssistido(pessoa: Pessoa): Observable<number> {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-
-    return this.httpClient.post<Pessoa>(`${API_URL}/pessoas/assistido`, pessoa, {headers})
-        .map(response => response)
-        .map(pessoa => pessoa.id);
-  }
-
   update(pessoa: Pessoa): Observable<Pessoa> {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
