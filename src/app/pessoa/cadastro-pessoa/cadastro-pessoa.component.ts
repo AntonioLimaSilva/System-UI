@@ -49,7 +49,7 @@ export class CadastroPessoaComponent implements OnInit {
   url: any;
   id: number;
 
-  formulario: FormGroup;
+  form: FormGroup;
 
   constructor(
     private pessoaService: PessoaService,
@@ -70,8 +70,8 @@ export class CadastroPessoaComponent implements OnInit {
     this.estadoService.findAll().subscribe(estados => { 
         this.estados = estados;
       },
-      error => {
-        return Observable.throw(this.errorHandlerService.handle(error));
+      ex => {
+        return Observable.throw(this.errorHandlerService.handle(ex));
       });
 
     this.id = this.activatedRoute.snapshot.params['id'];
@@ -81,14 +81,16 @@ export class CadastroPessoaComponent implements OnInit {
     }
   }
 
-  findAllCidadesBy(idEstado: number = -1) {
-    this.cidadeService.findByEstadoId(idEstado)
-      .subscribe(cidades => { 
-        this.cidades = cidades;
-      },
-      error => {
-        return Observable.throw(this.errorHandlerService.handle(error));
-      });
+  findAllCidadesBy(idEstado: number) {
+    if(idEstado) {
+      this.cidadeService.findByEstadoId(idEstado)
+        .subscribe(cidades => { 
+          this.cidades = cidades;
+        },
+        ex => {
+          return Observable.throw(this.errorHandlerService.handle(ex));
+        });
+    }
   }
 
   salvar(pessoa: Pessoa) {
@@ -104,28 +106,25 @@ export class CadastroPessoaComponent implements OnInit {
   
     this.pessoaService.save(pessoa)
       .subscribe((id) => {
-        //this.removeFoto();
         this.router.navigate(['/pessoas', id]);
         
         this.toastyService.success('Pessoa adicionada com sucesso!');
       },
-      error => {
-        this.toastyService.error('Erro adicionada pessoa!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+      ex => {
+        this.toastyService.error(ex.error);
+        return Observable.throw(this.errorHandlerService.handle(ex));
     });
   }
 
   update(pessoa: Pessoa) {
-    //pessoa.foto = this.foto;
-   // pessoa.contentType = this.contentType;
    this.preparePessoa(pessoa);
 
     this.pessoaService.update(pessoa).subscribe(pessoa => 
       {
         this.toastyService.success('Pessoa atualizada com sucesso!');   
-      }, error => {
-        this.toastyService.error('Erro atualizada pessoa!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+      }, ex => {
+        this.toastyService.error(ex.error);
+        return Observable.throw(this.errorHandlerService.handle(ex));
       });   
   }
 
@@ -142,16 +141,16 @@ export class CadastroPessoaComponent implements OnInit {
       p.dataNascimento = moment(p.dataNascimento).toDate();
       this.url = this.getImagePath(p.foto);
 
-      this.formulario.setValue(p);
+      this.form.setValue(p);
     },
-    error => {
-        this.toastyService.error('Erro ao buscar pessoa!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+    ex => {
+        this.toastyService.error(ex.error);
+        return Observable.throw(this.errorHandlerService.handle(ex));
     });
   }
 
   configure() {
-    this.formulario = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       id: [],
       nome: this.formBuilder.control('', [Validators.required, Validators.minLength(5)]),
       pseudonimo: this.formBuilder.control('', [Validators.required]),
@@ -199,9 +198,9 @@ export class CadastroPessoaComponent implements OnInit {
           this.contentType = arquvio.contentType;
           this.url = this.getImagePathTemp(this.foto);
         },
-        error => {
-          this.toastyService.error('Error ao enviar foto');
-          return Observable.throw(this.errorHandlerService.handle(error));
+        ex => {
+          this.toastyService.error(ex.error);
+          return Observable.throw(this.errorHandlerService.handle(ex));
       });
     }
   }
@@ -241,7 +240,7 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   get editando() {
-    return Boolean(this.formulario.get('id').value);
+    return Boolean(this.form.get('id').value);
   }
 
   getImagePath(filename: any) {

@@ -34,9 +34,9 @@ export class CadastroAssistidoComponent implements OnInit {
       form.reset();
 
       this.toastyService.success('Assistido salvo com sucesso');
-    }, error => {
-      this.toastyService.error('Erro salvando assistido');
-      return Observable.throw(this.errorHandlerService.handle(error));
+    }, ex => {
+      this.toastyService.error(ex.error);
+      return Observable.throw(this.errorHandlerService.handle(ex));
     })
 
   }

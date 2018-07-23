@@ -36,19 +36,10 @@
         
           <div class="row">												
             <div class="col-sm-12  form-group">							
-              <label for="nomePessoa" class="control-label">Nome</label> 
-              <div class="input-group">							
-                  <input type="text" readonly="readonly" class="form-control" 
-                    placeholder="Clique na lupa para pesquisar uma pessoa" [value]="assistido.pessoa?.nome" />
-                    <input type="hidden" name="pessoa" ngModel [(ngModel)]="assistido.pessoa" required >
-                    <span class="input-group-btn">
-                      <button class="btn  btn-default" type="button" title="Pesquisa avançada"
-                        data-toggle="modal" data-target="#">
-                          <i class="glyphicon  glyphicon-search"></i>
-                      </button>
-                    </span>
-                </div>
-              </div>				
+              <label class="control-label">Nome</label>             						
+              <input type="text" class="form-control" readonly="readonly" [value]="assistido.pessoa?.nome" />
+              <input type="hidden" name="pessoa" ngModel [(ngModel)]="assistido.pessoa" required />              
+            </div>				
           </div>			
         </div>
         <!-- /.box-body -->
