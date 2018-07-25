@@ -41,22 +41,20 @@ export class PesquisaPessoasComponent implements OnInit {
   findBy(page = 0) {
     this.filter.page = page;
 
-    this.pessoaService.findBy(this.filter)
-    .subscribe(resultado => {
+    this.pessoaService.findBy(this.filter).subscribe(resultado => {
       this.pessoas = resultado.pessoas,
       this.totalPages = new Array(resultado.totalPages);
     });
   }
 
   remove(id: number) {
-    this.pessoaService.remove(id)
-      .subscribe(() => {
+    this.pessoaService.remove(id).subscribe(() => {
         this.findBy();
 
         this.toastyService.success('Pessoa excluída com sucesso');
-      }, error => {
-        this.toastyService.error('Essa pessoa está sendo referênciado em outra tabela');
-        return Observable.throw(this.errorHandlerService.handle(error));
+      }, ex => {
+        this.toastyService.error(ex.error[0].messageUser);
+        return Observable.throw(this.errorHandlerService.handle(ex));
       });
   }
 

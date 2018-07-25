@@ -36,9 +36,9 @@ export class PesquisaDocumentosComponent implements OnInit {
       .subscribe(documentos => {
         this.documentos = documentos.content;
         this.totalPages = new Array(documentos.totalPages);
-      }, 
-        error => {this.toastyService.error('Erro na consulta de documentos');
-        return Observable.throw(this.errorHandlerService.handle(error));
+      }, ex => {
+        this.toastyService.error(ex.error);
+        return Observable.throw(this.errorHandlerService.handle(ex));
     });
   }
 
@@ -53,9 +53,9 @@ export class PesquisaDocumentosComponent implements OnInit {
       this.findBy();
 
       this.toastyService.success('Documento excluído com sucesso!');
-    },
-      error => {this.toastyService.error('Erro excluíndo documento!');
-      return Observable.throw(this.errorHandlerService.handle(error));
+    }, ex => {
+      this.toastyService.error(ex.error[0].messageUser);
+      return Observable.throw(this.errorHandlerService.handle(ex));
     });
   }
 

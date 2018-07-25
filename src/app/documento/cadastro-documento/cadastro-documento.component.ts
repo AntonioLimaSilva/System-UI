@@ -42,10 +42,9 @@ export class CadastroDocumentoComponent implements OnInit {
   findById(id: number) {
     this.documentoService.findById(id).subscribe(documento => {
       this.formGroup.setValue(documento);
-    },
-      error => {
-        this.toastyService.error('Error buscando documento!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+    }, ex => {
+      this.toastyService.error(ex.error[0].messageUser);
+      return Observable.throw(this.errorHandlerService.handle(ex));
       }
     );
   }
@@ -78,9 +77,9 @@ export class CadastroDocumentoComponent implements OnInit {
           this.formGroup.controls['contentType'].patchValue(doc.contentType);
           this.formGroup.controls['tamanho'].patchValue(doc.size);
        }
-     }, error => {
-        this.toastyService.error('Erro fazendo upload do arquivo!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+     }, ex => {
+        this.toastyService.error(ex.error);
+        return Observable.throw(this.errorHandlerService.handle(ex));
       }   
     );
   
@@ -108,16 +107,14 @@ export class CadastroDocumentoComponent implements OnInit {
   add(documento: Documento) {  
     documento.isPrincipal = documento.isPrincipal === null ? false : documento.isPrincipal;
     
-    this.documentoService.save(documento)
-      .subscribe(documento => {
+    this.documentoService.save(documento).subscribe(documento => {
         this.formGroup.reset();
         this.currentFileUpload = undefined;
   
         this.toastyService.success('Documento salvo com sucesso!');
-      },
-      error => {
-        this.toastyService.error('Erro salvando documento!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+      }, ex => {
+        this.toastyService.error(ex.error[0].messageUser);
+        return Observable.throw(this.errorHandlerService.handle(ex));
       }
     );
   }
@@ -125,9 +122,9 @@ export class CadastroDocumentoComponent implements OnInit {
   update(documento: Documento) {
     this.documentoService.update(documento).subscribe(documento => {
         this.toastyService.success('Documento atualizado com sucesso!');
-      },
-        error => {this.toastyService.error('Erro atualizando documento!');
-        return Observable.throw(this.errorHandlerService.handle(error));
+      }, ex => {
+        this.toastyService.error(ex.error[0].messageUser);
+        return Observable.throw(this.errorHandlerService.handle(ex));
       }
     );
   }

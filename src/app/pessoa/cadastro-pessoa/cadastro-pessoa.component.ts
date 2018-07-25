@@ -69,8 +69,7 @@ export class CadastroPessoaComponent implements OnInit {
 
     this.estadoService.findAll().subscribe(estados => { 
         this.estados = estados;
-      },
-      ex => {
+      }, ex => {
         return Observable.throw(this.errorHandlerService.handle(ex));
       });
 
@@ -83,13 +82,11 @@ export class CadastroPessoaComponent implements OnInit {
 
   findAllCidadesBy(idEstado: number) {
     if(idEstado) {
-      this.cidadeService.findByEstadoId(idEstado)
-        .subscribe(cidades => { 
-          this.cidades = cidades;
-        },
-        ex => {
-          return Observable.throw(this.errorHandlerService.handle(ex));
-        });
+      this.cidadeService.findByEstadoId(idEstado).subscribe(cidades => { 
+        this.cidades = cidades;
+      }, ex => {
+        return Observable.throw(this.errorHandlerService.handle(ex));
+      });
     }
   }
 
@@ -104,14 +101,12 @@ export class CadastroPessoaComponent implements OnInit {
   add(pessoa: Pessoa) {
     this.preparePessoa(pessoa);
   
-    this.pessoaService.save(pessoa)
-      .subscribe((id) => {
+    this.pessoaService.save(pessoa).subscribe((id) => {
         this.router.navigate(['/pessoas', id]);
         
         this.toastyService.success('Pessoa adicionada com sucesso!');
-      },
-      ex => {
-        this.toastyService.error(ex.error);
+      }, ex => {
+        this.toastyService.error(ex.error[0].messageUser);
         return Observable.throw(this.errorHandlerService.handle(ex));
     });
   }
@@ -119,13 +114,12 @@ export class CadastroPessoaComponent implements OnInit {
   update(pessoa: Pessoa) {
    this.preparePessoa(pessoa);
 
-    this.pessoaService.update(pessoa).subscribe(pessoa => 
-      {
+    this.pessoaService.update(pessoa).subscribe(pessoa => {
         this.toastyService.success('Pessoa atualizada com sucesso!');   
       }, ex => {
-        this.toastyService.error(ex.error);
+        this.toastyService.error(ex.error[0].messageUser);
         return Observable.throw(this.errorHandlerService.handle(ex));
-      });   
+    });   
   }
 
   transferToAssistido() {
@@ -142,10 +136,9 @@ export class CadastroPessoaComponent implements OnInit {
       this.url = this.getImagePath(p.foto);
 
       this.form.setValue(p);
-    },
-    ex => {
-        this.toastyService.error(ex.error);
-        return Observable.throw(this.errorHandlerService.handle(ex));
+    }, ex => {
+      this.toastyService.error(ex.error[0].messageUser);
+      return Observable.throw(this.errorHandlerService.handle(ex));
     });
   }
 
@@ -192,13 +185,11 @@ export class CadastroPessoaComponent implements OnInit {
     if(event.target.files && event.target.files[0]) {
       const files = event.target.files[0];
 
-      this.pessoaService.upload(files).subscribe(
-        arquvio => {
+      this.pessoaService.upload(files).subscribe(arquvio => {
           this.foto = arquvio.fileName;
           this.contentType = arquvio.contentType;
           this.url = this.getImagePathTemp(this.foto);
-        },
-        ex => {
+        }, ex => {
           this.toastyService.error(ex.error);
           return Observable.throw(this.errorHandlerService.handle(ex));
       });
