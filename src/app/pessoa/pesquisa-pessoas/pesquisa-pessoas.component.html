@@ -27,7 +27,6 @@
           <!-- /.box-header -->
           <div class="box-body">
 
-
             <form #form="ngForm" novalidate>
               <div class="row">
                 <div class="col-sm-6  form-group">
@@ -53,52 +52,12 @@
               <div class="box-footer">
                 <button class="btn  btn-primary" (click)="search()" type="submit">Pesquisar</button>
               </div>
-            </form>           
-          
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th class="table-col-nome">#</th>
-                    <th class="table-col-nome">Nome</th>
-                    <th class="table-col-pseudonimo">Pesudônimo</th>
-                    <th class="table-col-email">Email</th>
-                    <th class="table-col-celular">Celular</th>
-                    <th class="table-col-cpf">CPF</th>
-                    <th class="table-col-acoes"></th>
-                  </tr>
-                </thead>
-                
-                <tbody>
-                  <tr class="d-flex" *ngFor="let pessoa of pessoas">
-                    <td> <span class="place-info-box-icon"><img [src]="getImagePath(pessoa.foto)"/></span></td>
-                    <td class="col-4">{{pessoa.nome}}</td>
-                    <td class="col-2">{{pessoa.pseudonimo}}</td>
-                    <td class="col-4">{{pessoa.email}}</td>
-                    <td class="col-2">{{pessoa.foneCelular}}</td>
-                    <td class="col-2">{{pessoa.cpf}}</td>
-                    <td class="col-2 text-center">
-                      <button class="btn customBtn"  [routerLink]="['/pessoas', pessoa.id]">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                      </button>  
-                      <npj-modal-remove (deleteFun)="remove($event)" [id]="pessoa.id"></npj-modal-remove>
-                    </td>
-                  </tr>
-                  <tr *ngIf="!pessoas?.length">
-                    <td colspan="7">Nenhuma pessoa encontrada</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            </form>
 
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li *ngFor="let p of totalPages; let i = index" class="page-item"><a class="page-link" href=""
-                  (click)="setPage(i, $event)" [class.active]="i === filter.page">{{i+1}}</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-              </ul>
-            </nav>
+            <npj-table [objects]="pessoas" (removeEvent)="remove($event)"></npj-table>
+
+            <npj-pagination [totalPages]="totalPages" (addEvent)="setPage($event)" [page]="filter.page"></npj-pagination>
+
           </div>
         </div>
       </div>

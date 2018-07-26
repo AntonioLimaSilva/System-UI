@@ -29,6 +29,8 @@ import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pes
 import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.component';
 import { AssistidoService } from './assistido/assistido.service';
 import { CadastroAssistidoComponent } from './assistido/cadastro-assistido/cadastro-assistido.component';
+import { TableComponent } from './shared/table/table.component';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { CadastroAssistidoComponent } from './assistido/cadastro-assistido/cadas
     CadastroDocumentoComponent,
     PesquisaDocumentosComponent,
     ModalRemoveComponent,
-    CadastroAssistidoComponent
+    CadastroAssistidoComponent,
+    TableComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

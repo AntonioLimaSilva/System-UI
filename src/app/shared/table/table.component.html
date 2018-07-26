@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="table-col-nome">#</th>
+        <th class="table-col-nome">Nome</th>
+        <th class="table-col-pseudonimo">Pesudônimo</th>
+        <th class="table-col-email">Email</th>
+        <th class="table-col-celular">Celular</th>
+        <th class="table-col-cpf">CPF</th>
+        <th class="table-col-acoes"></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr class="d-flex" *ngFor="let obj of objects">
+        <td><span class="place-info-box-icon"><img [src]="getImagePath(obj.foto)"/></span></td>
+        <td class="col-4">{{obj.nome}}</td>
+        <td class="col-2">{{obj.pseudonimo}}</td>
+        <td class="col-4">{{obj.email}}</td>
+        <td class="col-2">{{obj.foneCelular}}</td>
+        <td class="col-2">{{obj.cpf}}</td>
+        <td class="col-2 text-center">
+          <button class="btn customBtn"  [routerLink]="['/pessoas', obj.id]">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>  
+          <npj-modal-remove (deleteFun)="remove($event)" [id]="obj.id"></npj-modal-remove>
+        </td>
+      </tr>
+      <tr *ngIf="!objects">
+        <td colspan="7">Nenhuma objeto encontrado</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -32,9 +32,7 @@ export class PesquisaPessoasComponent implements OnInit {
     this.findBy();
   }
 
-  setPage(page, event) {
-    event.preventDefault();
-
+  setPage(page) {
     this.findBy(page);
   }
 
@@ -56,10 +54,5 @@ export class PesquisaPessoasComponent implements OnInit {
         this.toastyService.error(ex.error[0].messageUser);
         return Observable.throw(this.errorHandlerService.handle(ex));
       });
-  }
-
-  getImagePath(filename: any) {
-    let url = filename === "" || filename === null ? `${API_URL}/fotos/thumbnail.pessoa.mock.png` : `${API_URL}/fotos/thumbnail.${filename}`;
-    return url;
   }
 }
