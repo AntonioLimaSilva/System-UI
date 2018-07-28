@@ -29,6 +29,7 @@ import { PesquisaDocumentosComponent } from './documento/pesquisa-documentos/pes
 import { ModalRemoveComponent } from './shared/modal-remove/modal-remove.component';
 import { AssistidoService } from './assistido/assistido.service';
 import { CadastroAssistidoComponent } from './assistido/cadastro-assistido/cadastro-assistido.component';
+import { CadastroFuncionarioComponent } from './funcionario/cadastro-funcionario/cadastro-funcionario.component';
 import { TableComponent } from './shared/table/table.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
 
@@ -49,7 +50,8 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     ModalRemoveComponent,
     CadastroAssistidoComponent,
     TableComponent,
-    PaginationComponent
+    PaginationComponent,
+    CadastroFuncionarioComponent
   ],
   imports: [
     BrowserModule,

@@ -64,4 +64,13 @@ class Assistido {
     };
 }
 
-export {EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento, Assistido}
+class Funcionario {
+    id: number;
+    funcao: string;
+    pessoa: {
+        id: number;
+        nome: string;
+    };
+}
+
+export { EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento, Assistido, Funcionario }

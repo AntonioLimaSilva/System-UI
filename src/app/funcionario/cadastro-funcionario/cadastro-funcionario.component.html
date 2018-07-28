@@ -1,0 +1,62 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Cadastro de funcionário<small>Visualização</small></h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Formulários</a></li>
+      <li class="active">Elementos gerais</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">			
+    <div class="box box-default">
+            
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="aw-page-header-controls">
+              <a class="btn  btn-default" href="javascript:;">
+                <i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa funcionários</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+      <!-- /.box-header -->
+        
+      <form #form="ngForm" novalidate>
+        <div class="box-body">
+        
+          <div class="row">												
+            <div class="col-sm-12  form-group">							
+              <label class="control-label">Nome</label>             						
+              <input type="text" class="form-control" readonly="readonly" [value]="funcionario.pessoa?.nome" />
+              <input type="hidden" name="pessoa" ngModel [(ngModel)]="funcionario.pessoa" required />              
+            </div>				
+          </div>
+
+          <div class="row">
+            <div class="form-group  col-sm-12">
+              <label class="control-label" for="bairro">Função</label> 
+              <input type="text" class="form-control" size="100" maxlength="100" name="funcao" ngModel [(ngModel)]="funcao" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button [disabled]="form.invalid" class="btn  btn-primary" (click)="save(form)" type="submit">Salvar</button>
+          <a href="javascript:;"  class="btn btn-info" role="button">Novo assistido</a> 
+        </div>
+      </form>
+    </div>
+    <!-- /.box -->
+  </section>
+  <!-- /.content -->
+</div>
+
