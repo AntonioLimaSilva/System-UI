@@ -78,7 +78,7 @@
                       <npj-modal-remove (deleteFun)="remove($event)" [id]="doc.id"></npj-modal-remove>                        
                     </td>
                   </tr>
-                  <tr *ngIf="!documentos?.length">
+                  <tr *ngIf="!documentos">
                     <td colspan="7">Nenhum documento encontrado</td>
                   </tr>
                 </tbody>
@@ -88,7 +88,7 @@
             <nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li *ngFor="let p of totalPages; let i = index" class="page-item"><a class="page-link" href=""
+                <li *ngFor="let p of totalPages; index as i" class="page-item"><a class="page-link" href=""
                   (click)="setPage(i, $event)" [class.active]="i === filter.page">{{i+1}}</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
               </ul>
