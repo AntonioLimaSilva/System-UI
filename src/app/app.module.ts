@@ -32,6 +32,7 @@ import { CadastroAssistidoComponent } from './assistido/cadastro-assistido/cadas
 import { CadastroFuncionarioComponent } from './funcionario/cadastro-funcionario/cadastro-funcionario.component';
 import { TableComponent } from './shared/table/table.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { FuncionarioService } from './funcionario/funcionario.service';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     PessoaService,
     DocumentoService,
     AssistidoService,
+    FuncionarioService,
     ErrorHandlerService
   ],
   bootstrap: [AppComponent]

@@ -180,15 +180,7 @@
             <div class="row">
               <npj-input-content formGroupName="estado" for="estado" label="Estado" errorMessage="Estado deve ser informado">
                   <npj-select [options]="estados" formControlName="id" (change)="findAllCidadesBy($event.target.value)"></npj-select>
-              </npj-input-content>
-
-              <!-- <div class="form-group  col-sm-12" formGroupName="estado">
-                  <label class="control-label">Estado</label>           
-                  <select class="form-control" formControlName="id" (change)="findAllCidadesBy($event.target.value)">
-                    <option value="">Selecione um estado</option>
-                    <option *ngFor="let estado of estados" value="{{estado.id}}">{{estado.nome}}</option>
-                  </select>
-                </div>  -->        
+              </npj-input-content>      
             </div>
            
             <div class="row">
@@ -227,7 +219,8 @@
         <!-- /.box-body -->
         <div class="box-footer">         
           <button [disabled]="form.invalid" type="submit" (click)="salvar(form.value)" class="btn  btn-primary">Salvar</button>
-          <button [disabled]="!form.get('id').value" type="submit" (click)="transferToAssistido()" class="btn  btn-primary">Gerar assistido</button>              
+          <button [disabled]="!form.get('id').value" type="submit" (click)="transferToAssistido()" class="btn  btn-primary">Gerar assistido</button>
+          <button [disabled]="!form.get('id').value" type="submit" (click)="transferToFuncionario()" class="btn  btn-primary">Gerar funcionário</button>         
           <a [routerLink]="['/pessoas/nova']" class="btn btn-info" role="button">Nova pessoa</a>
         </div>
     </div>

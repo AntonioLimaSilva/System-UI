@@ -15,6 +15,7 @@ import { CidadeService } from '../../cidade/cidade.service';
 import { API_URL } from '../../api-url';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { AssistidoService } from '../../assistido/assistido.service';
+import { FuncionarioService } from '../../funcionario/funcionario.service';
 
 @Component({
   selector: 'npj-cadastro-pessoa',
@@ -56,6 +57,7 @@ export class CadastroPessoaComponent implements OnInit {
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
     private assistidoService: AssistidoService,
+    private funcionarioService: FuncionarioService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -126,6 +128,12 @@ export class CadastroPessoaComponent implements OnInit {
     this.assistidoService.setIdPessoa(this.id);
 
     this.router.navigate(['/assistidos/novo']);
+  }
+
+  transferToFuncionario() {
+    this.funcionarioService.setIdPessoa(this.id);
+
+    this.router.navigate(['/funcionarios/novo'])
   }
 
   load(id: number) {
