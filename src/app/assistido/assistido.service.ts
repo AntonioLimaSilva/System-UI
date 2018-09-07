@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -32,6 +32,11 @@ export class AssistidoService {
     }
     
     return this.pessoaService.findById(this.id);
+  }
+
+  findByName(nome: any): Observable<any> {
+    let params = new HttpParams({fromObject: { nome }});
+    return this.httpClient.get<any>(`${API_URL}/assistidos`, { params });
   }
 
   setIdPessoa(id: number) {

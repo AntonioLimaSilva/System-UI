@@ -56,7 +56,7 @@
 
             <npj-table [objects]="pessoas" (removeEvent)="remove($event)"></npj-table>
 
-            <npj-pagination [totalPages]="totalPages" (addEvent)="setPage($event)" [page]="filter.page"></npj-pagination>
+            <npj-pagination [totalPages]="totalPages" (addEvent)="setPage($event)" (firstPageEvent)="setFirstPage()" (lastPageEvent)="setLastPage($event)" [page]="filter.page"></npj-pagination>
 
           </div>
         </div>

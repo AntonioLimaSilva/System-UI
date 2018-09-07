@@ -73,4 +73,15 @@ class Funcionario {
     };
 }
 
-export { EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento, Assistido, Funcionario }
+class Processo {
+    id: number;
+    doFato: string;
+    doDireito: string;
+    doPedido: string;
+    documentosQueFaltam: string;
+    localizacao: string;
+    estaComAluno: string;
+    extinto: string;
+}
+
+export { EstadoCivil, Estado, Cidade, Endereco, Pessoa, Documento, Assistido, Funcionario, Processo }

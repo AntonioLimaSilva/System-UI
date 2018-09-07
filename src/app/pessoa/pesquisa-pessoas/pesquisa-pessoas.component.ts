@@ -45,6 +45,15 @@ export class PesquisaPessoasComponent implements OnInit {
     });
   }
 
+  setFirstPage() {
+    this.findBy();
+  }
+
+  setLastPage(totalPages: any) {
+    let page = totalPages.length - 1;
+    this.findBy(page);
+  }
+
   remove(id: number) {
     this.pessoaService.remove(id).subscribe(() => {
         this.findBy();

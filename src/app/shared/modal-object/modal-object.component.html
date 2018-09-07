@@ -1,0 +1,56 @@
+<div class="modal fade" id="modal_object{{id}}" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header modal_header_color">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Pesquisa de pessoas</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row margin_both">
+            <div class="col-md-12">
+              <div class="row form-group text-center">
+                <span>Faça uma pesquisa por aqui!</span>
+              </div>
+              <div class="row form-group">
+                <div class="modal-body">
+                  <form novalidate #form="ngForm">
+                    <div class="form-group">
+                        <label class="control-label">Nome</label>
+                        <input size="100" maxlength="100" type="text" name="nome" ngModel class="form-control" autofocus="autofocus"/>
+                      </div>
+                  </form>
+                  <div class="text-left">
+                    <button type="button" (click)="search(form.value)" class="btn btn-primary">Pesquisar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  </div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Nome</th>
+                          <th scope="col">Pseudonimo</th>
+                          <th scope="col">CPF</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let assistido of assistidos">
+                          <th scope="row">{{assistido.id}}</th>
+                          <td>{{assistido?.nome}}</td>
+                          <td>{{assistido?.pseudonino}}</td>
+                          <td>{{assistido?.cpf}}</td>
+                        </tr>
+                      </tbody>
+                    </table>          
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="btn customBtn" data-toggle="modal" attr.data-target="#modal_object{{id}}" *ngIf='!lg'>
+    <span class="glyphicon glyphicon-search"></span> Assistidos
+  </button>
+  

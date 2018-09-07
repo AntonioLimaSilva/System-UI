@@ -1,0 +1,107 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Cadastro de processo<small>Visualização</small></h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Formulários</a></li>
+      <li class="active">Elementos gerais</li>
+    </ol>
+  </section>
+
+  <section class="content">			
+    <div class="box box-default">
+            
+      <div class="box-header with-border">
+        <div class="row">						
+          <div class="col-sm-10">					        
+                <npj-modal-object></npj-modal-object>				        
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaFuncionarioProcessoModal">Professor(a)</button>
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaDocumentoProcessoModal">Documento</button>
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaAcaoProcessoModal">Ação</button>
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#pesquisaAlunoProcessoModal">Aluno</button>
+              </div>
+        </div>
+
+        <div class="box-tools pull-right">
+          <a class="btn  btn-default">
+            <i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa processos</span>
+          </a>
+        </div>
+      </div>
+        
+      <form novalidate #form="ngForm">				
+        <div class="box-body">
+          
+          <div class="row">	
+            <div class="col-sm-6  form-group bw-required">
+              <label for="id" class="control-label">Nº processo</label> 
+              <input id="id" type="text" class="form-control" readonly="readonly" name="id" [(ngModel)]="processo.id" required />
+            </div>
+                
+            <div class="form-group  col-sm-3">
+              <label class="control-label">Esta com aluno</label>
+              <div>
+                <input id="estaComAluno" type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+                  data-on-text="Sim" data-off-text="Não" name="estaComAluno" [(ngModel)]="processo.estaComAluno" />
+              </div>
+            </div>	
+            <div class="form-group  col-sm-3">
+              <label class="control-label">Extinto</label>
+              <div>
+                <input id="extinto" type="checkbox" class="js-checkbox" data-size="small" data-off-color="danger" 
+                  data-on-text="Sim" data-off-text="Não" name="extinto" [(ngModel)]="processo.extinto" />
+              </div>
+            </div>
+            
+          </div>
+            
+          <div class="row">									
+            <div class="col-sm-12  form-group">
+              <label for="doFato" class="control-label">Dos fatos</label> 
+              <textarea id="doFato" rows="2" maxlength="200" class="form-control"
+              name="dosFatos" [(ngModel)]="processo.doFato"></textarea>
+            </div>
+            
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label for="doDireito" class="control-label">Do direito</label> 
+              <textarea id="doDireito" rows="2" maxlength="200" class="form-control"
+                name="doDireito" [(ngModel)]="processo.doDireito"></textarea>
+            </div>						
+          </div>
+          
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label for="doPedido" class="control-label">Do pedido</label> 
+              <textarea id="doPedido" rows="2" maxlength="200" class="form-control"
+                name="doPedido" [(ngModel)]="processo.doPedido"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label for="documentosQueFaltam" class="control-label">Documentos que faltam</label> 
+              <textarea id="documentosQueFaltam" rows="2" maxlength="200" class="form-control"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12  form-group">
+              <label for="localizacao" class="control-label">Localização</label> 
+              <input id="localizacao" type="text" placeholder="Armário 1, Prateleira 2, Processo 3 Ex: (1-2-3)" 
+                size="100" maxlength="100" class="form-control" />
+            </div>	            
+          </div>
+        </div>
+
+        <div class="box-footer">
+          <button class="btn  btn-primary" type="submit" (click)="criar()">Criar processo</button>
+          <button type="button" class="btn btn-info" [disabled]="form.invalid">Imprimir</button>
+          <a href="javascript:;" class="btn btn-info" role="button">Novo processo</a>
+        </div>
+      </form>
+    </div>	        
+  </section>
+</div>

@@ -33,6 +33,9 @@ import { CadastroFuncionarioComponent } from './funcionario/cadastro-funcionario
 import { TableComponent } from './shared/table/table.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
 import { FuncionarioService } from './funcionario/funcionario.service';
+import { CadastroProcessoComponent } from './processo/cadastro-processo/cadastro-processo.component';
+import { ProcessoService } from './processo/processo.service';
+import { ModalObjectComponent } from './shared/modal-object/modal-object.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { FuncionarioService } from './funcionario/funcionario.service';
     CadastroAssistidoComponent,
     TableComponent,
     PaginationComponent,
-    CadastroFuncionarioComponent
+    CadastroFuncionarioComponent,
+    CadastroProcessoComponent,
+    ModalObjectComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +76,7 @@ import { FuncionarioService } from './funcionario/funcionario.service';
     DocumentoService,
     AssistidoService,
     FuncionarioService,
+    ProcessoService,
     ErrorHandlerService
   ],
   bootstrap: [AppComponent]
