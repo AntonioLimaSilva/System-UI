@@ -33,7 +33,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let assistido of assistidos">
+                        <tr *ngFor="let assistido of assistidos" (click)="setAssistido(assistido)">
                           <th scope="row">{{assistido.id}}</th>
                           <td>{{assistido?.nome}}</td>
                           <td>{{assistido?.pseudonino}}</td>
