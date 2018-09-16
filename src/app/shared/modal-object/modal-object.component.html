@@ -28,15 +28,15 @@
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Nome</th>
-                          <th scope="col">Pseudonimo</th>
+                          <th scope="col">Email</th>
                           <th scope="col">CPF</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let assistido of assistidos" (click)="setAssistido(assistido)">
+                        <tr *ngFor="let assistido of assistidos" (click)="setAssistido(assistido)" data-dismiss="modal">
                           <th scope="row">{{assistido.id}}</th>
                           <td>{{assistido?.nome}}</td>
-                          <td>{{assistido?.pseudonino}}</td>
+                          <td>{{assistido?.email}}</td>
                           <td>{{assistido?.cpf}}</td>
                         </tr>
                       </tbody>

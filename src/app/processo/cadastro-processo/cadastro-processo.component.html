@@ -95,11 +95,15 @@
             </div>	            
           </div>
           <div class="row">
-            <div class="col-sm-12 form-group">
-              <img src="{{url}}" >						
-              <span class="label  label-default">{{assistido?.nome}}</span>
-              <span class="label  label-default">{{assistido?.pseudonimo}}</span>
-              <span class="label  label-default">{{assistido?.cpf}}</span>
+            <div class="npj-tabela-item">
+              <div class="npj-tabela-item__coluna  npj-tabela-item__coluna--foto">
+                <img src="{{url}}">
+              </div>
+              <div class="npj-tabela-item__coluna  npj-tabela-item__coluna--detalhes">				
+                <span class="npj-tabela-pessoa-nome">{{assistido?.nome}}</span>
+                <span class="npj-tabela-pessoa-email">{{assistido?.email}}</span>
+                <span class="npj-tabela-pessoa-cpf">{{assistido?.cpf}}</span>
+              </div>
             </div>							
           </div>
         </div>

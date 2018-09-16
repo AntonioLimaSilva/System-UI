@@ -28,3 +28,57 @@
     
     font-size: 500px;
 }
+
+.npj-tabela-item {
+	position: relative; /* Para que o painel de exclusão apareça dentro da linha */
+	background-color: #b8bfc1 !important;
+	padding: 5px;
+	
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.npj-tabela-item:after {
+	clear: both;
+	display: block;
+    content: "";
+}
+
+.npj-tabela-item ~ .npj-tabela-item {
+	border-top: 1px solid #ddd;
+}
+
+.npj-tabela-item__coluna {
+	padding: 0 10px;
+}
+
+.npj-tabela-item__coluna--foto {
+	float: left;
+	width: 60px;
+	
+	text-align: center;
+}
+
+.npj-tabela-item__coluna--detalhes {
+	margin-left: 60px;
+}
+
+.npj-tabela-pessoa-nome {
+	font-weight: 500;
+	font-size: 1.1em;
+	display: block;
+}
+
+.npj-tabela-pessoa-email {
+	color: #09090a;
+	font-weight: 500;
+	display: block;
+}
+
+.npj-tabela-pessoa-cpf {
+	color: #09090a;
+	font-weight: 500;
+	display: block;
+}
